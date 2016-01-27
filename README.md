@@ -11,13 +11,14 @@ The server does two main things:
 
 The server is intended to be deployed via Heroku, and will look to Heroku-flavored environment variables for specific keys.
 
-For heroku usage, after cloning this repository:
+For Heroku usage, after cloning this repository (and assuming you have the Heroku CLI installed):
 
 ```
 heroku create
 heroku config:set WEEBLY_CLIENT_ID=[your_apps_client_id]
 heroku config:set WEEBLY_SECRET_KEY=[your_apps_secret_key]
 git push heroku master
+heroku ps:scale web=1
 ```
 
 For non-heroku usage, you can define your keys either within the code, or via other environment variables. 
