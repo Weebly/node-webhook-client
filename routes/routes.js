@@ -21,13 +21,14 @@ module.exports = function(app, express) {
 	app.get('/oauth/phase-one', function(req, res) {
 
 		// first, let's verify that our hmac is consistent with what was sent.
-		var hmac = crypto.createHmac('sha256', new Buffer(secretKey, 'utf-8'));
-		hmac.update('user_id=' + req.query.user_id + '&timestamp=' + req.query.timestamp + '&site_id=' + req.query.site_id);
-		var digest = hmac.digest('hex');
-		if (digest !== req.query.hmac) {
-			var message = 'hmac did not match computed hash \n';
-			message += 'expected: ' + req.query.hmac + '\n';
-			message += 'computed: ' + digest;
+		var compareString = 'user_id=' + req.query.user_id;
+		compareString += '&timestamp=' + req.query.timestamp;
+		compareString += '&site_id=' + req.query.site_id;
+
+		if (!validateHmac(req.query.hmac, compareString)) {
+			var message = 'The OAuth flow was started, but the hmac calculated didn\'t match the hmac passed. \n';
+			message += 'Expected: ' + req.query.hmac + '\n';
+			message += 'Computed: ' + generateHamc(compareString) + '\n';
 			res.status(500).send(message);	// let weebly know we failed
 			return;
 		}
@@ -84,21 +85,51 @@ module.exports = function(app, express) {
 	// endpoint for the webhooks post request.
 	// inside your app's manifest.json, you will need to set this URL as its webhook endpoint
 	app.post('/webhooks/callback', function(req, res) {
-		console.log('A new webhook was received:\n');
-		console.log(req.body);
 
-		var data = "\nHeaders:\n" + JSON.stringify(req.headers, null, 2) + "\n";
-		data += "\nData:\n" + JSON.stringify(req.body, null, 2) + "\n";
+		// first,validate this and make sure it's correct
+		var comparisonObject = {
+			"client_id": req.body.client_id,
+			"client_version": req.body.client_version,
+			"event": req.body.event,
+			"timestamp": req.body.timestamp,
+			"data": req.body.data
+		}
+		var comparisonString = JSON.stringify(comparisonObject);
 
-		fs.appendFile(path.resolve(__dirname + '/../messages/messages.txt'), data, function (err) {
+		if (!validateHmac(req.body.hmac, comparisonString)) {
+			var message = "\nA new webhook was received, but it's calculated hmac didn't match what was passed.\n";
+			message += "Expected: " + req.body.hmac + '\n';
+			message += "Calculated: " + generateHmac(comparisonString) + '\n';
+		} else {
+			var message = "\nA new webhook was receieved:\n";
+		}
+
+		message += "\nHeaders:\n" + JSON.stringify(req.headers, null, 2) + "\n";
+		message += "\nData:\n" + JSON.stringify(req.body, null, 2) + "\n";
+
+		console.log(message);
+
+		fs.appendFile(path.resolve(__dirname + '/../messages/messages.txt'), message, function (err) {
 			console.log(err);
 		});
 
-		res.status(200).send('got your message');
+		res.status(200).send(message);
 	});
 
 	// load up the webhook data we've been storing
 	app.get('/', function(req, res) {
 		res.sendFile(path.resolve(__dirname + '/../messages/messages.txt'));
 	});
+
+	// helper functions to validate hmacs as they come in.
+	function validateHmac(hmac, compareString) {
+		var digest = generateHmac(compareString);
+		return (digest == hmac);
+	}
+
+	function generateHmac(string) {
+		var crypt = crypto.createHmac('sha256', new Buffer(secretKey, 'utf-8'));
+		crypt.update(string);
+		return crypt.digest('hex');
+	}
 }
