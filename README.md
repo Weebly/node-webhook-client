@@ -42,7 +42,7 @@ By default, this server sets the scope of the OAuth app to solely webhooks, and 
 ```json
 {
 	"callback_url": "[SERVER_INSTANCE]/webhooks/callback",
-	"events" [
+	"events": [
 
 	]
 }
