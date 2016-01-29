@@ -45,7 +45,7 @@ module.exports = function(app, express) {
 			redirectUrl += '?client_id=' + clientId;	// client ID
 			redirectUrl += '&user_id=' + req.query.user_id;
 			redirectUrl += '&site_id=' + req.query.site_id;
-			redirectUrl += '&scope=' + 'webhooks';	// replace this with whatever scope you desire.
+			redirectUrl += '&scope=' + 'read:blog,read:site,write:site,webhooks';	// replace this with whatever scope you desire.
 			redirectUrl += '&redirect_uri=' + phaseTwoLink;
 
 			// if a version is included, we're obligated to send that back.
