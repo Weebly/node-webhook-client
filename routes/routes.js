@@ -73,6 +73,11 @@ module.exports = function(app, express) {
 				// we now have the token!
 				// you can store this wherever; right now this is logged to the console.
 				console.log(payload.access_token);
+
+				fs.appendFile(path.resolve(__dirname + '/../messages/messages.txt'), '\nAccess token: ' + payload.access_token + '\n', function (err) {
+					console.log(err);
+				});
+
 				// then send them back to the callback url that was passed.
 				res.redirect(payload.callback_url);
 			} else {
