@@ -37,7 +37,7 @@ router.get('/phase-one', function(req, res) {
 			'redirect_uri': phaseTwoLink
 		};
 		let paramsString = querystring.stringify(callbackParams);
-		let redirectUrl = `${req.query.callback_url}?${paramsString)}`;
+		let redirectUrl = `${req.query.callback_url}?${paramsString}`;
 
 		if(req.query.version) {
 			redirectUrl += `&version=${req.query.version}`;
