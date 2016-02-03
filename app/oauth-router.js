@@ -19,11 +19,11 @@ router.get('/phase-one', function(req, res) {
 	};
 	let compareString = querystring.stringify(compareObj);
 
-	if (!Utility.validateHmac(req.query.hmac, compareString)) {
+	if (!Utility.validateHmac(req.query.hmac, compareString, secretKey)) {
 		let messages = [];
 		messages.push("The OAuth flow was started, but the hmac calculated didn't match the hmac passed.");
 		messages.push(`Expected: ${req.query.hmac}`);
-		messages.push(`Computed: ${generateHamc(compareString)}`);
+		messages.push(`Computed: ${Utility.generateHmac(compareString, secretKey)}`);
 		let message = messages.join("\n");
 		return res.status(500).send(message);
 	}

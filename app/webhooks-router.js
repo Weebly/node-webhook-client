@@ -18,7 +18,7 @@ router.post('/callback', function(req, res) {
 
 	let messages = [];
 
-	if (!Utility.validateHmac(req.body.hmac, comparisonString)) {
+	if (!Utility.validateHmac(req.body.hmac, comparisonString, req.app.secretKey)) {
 		messages.push(`A new webhook was received, but it's calculated hmac didn't match what was passed.`);
 		messages.push(`Expected ${req.body.hmac}`);
 		messages.push(`Calculated ${Utility.generateHmac(comparisonString)}`);
