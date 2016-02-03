@@ -67,10 +67,10 @@ router.get('/phase-two', function(req, res) {
 		let message = `\nAccess token: ${payload.access_token}`;
 
 		fs.appendFile(
-			path.resolve(__dirname + '/../message/messages.txt'),
+			path.resolve(__dirname + '/../messages/messages.txt'),
 			message,
 			function(error) {
-				console.error(err);
+				console.error(error);
 			}
 		);
 
