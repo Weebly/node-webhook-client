@@ -14,5 +14,8 @@
 		"needle": "^0.10.0",
 		"body-parser": "^1.14.1",
 		"crypto": "^0.0.3"
+	},
+	"engines": {
+		"node": "5.5.0"
 	}
 }

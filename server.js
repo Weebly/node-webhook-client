@@ -17,13 +17,13 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
-app.use(WeeblyMiddleware({
+const wMiddleware = new WeeblyMiddleware({
 	'client_id': '', // set your Client ID here (or even better, in a config file)
 	'secret_key': '' // set your Secret Key here (or even better, in a config file)
-}));
+});
 
-app.use('/oauth', oauthRouter);
-app.use('/webhooks', webhooksRouter);
+app.use('/oauth', wMiddleware, oauthRouter);
+app.use('/webhooks', wMiddleware, webhooksRouter);
 
 app.get('/', function(req, res) {
 	res.sendFile(path.resolve(`${__dirname}/messages/messages.txt`));
