@@ -34,8 +34,6 @@ router.get('/phase-one', function(req, res) {
 		messages.push(`Computed: ${Utility.generateHmac(compareString, secretKey)}`);
 		let message = "\n" + messages.join("\n") + "\n";
 		return res.status(500).send(message);
-	} else {
-		messages.push(`\nA new installation has been initialized.\n`)
 	}
 
 	needle.get('https://api.weebly.com/app-center/authorize', function(error, response) {
