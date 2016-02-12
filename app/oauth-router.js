@@ -19,13 +19,23 @@ router.get('/phase-one', function(req, res) {
 	};
 	let compareString = querystring.stringify(compareObj);
 
+	fs.appendFile(
+		path.resolve(__dirname + '/../messages/messages.txt'),
+		`\nA new installation for user id ${req.query.user_id}, site id ${req.query.site_id} has been initalized.\n`,
+		function(error) {
+			console.error(error);
+		}
+	);
+
 	if (!Utility.validateHmac(req.query.hmac, compareString, secretKey)) {
 		let messages = [];
 		messages.push("The OAuth flow was started, but the hmac calculated didn't match the hmac passed.");
 		messages.push(`Expected: ${req.query.hmac}`);
 		messages.push(`Computed: ${Utility.generateHmac(compareString, secretKey)}`);
-		let message = messages.join("\n");
+		let message = "\n" + messages.join("\n") + "\n";
 		return res.status(500).send(message);
+	} else {
+		messages.push(`\nA new installation has been initialized.\n`)
 	}
 
 	needle.get('https://api.weebly.com/app-center/authorize', function(error, response) {
@@ -64,7 +74,7 @@ router.get('/phase-two', function(req, res) {
 		// we have the token. you can store this wherever
 		console.log(payload.access_token);
 
-		let message = `\nAccess token: ${payload.access_token}`;
+		let message = `\nAccess token: ${payload.access_token}\n`;
 
 		fs.appendFile(
 			path.resolve(__dirname + '/../messages/messages.txt'),
