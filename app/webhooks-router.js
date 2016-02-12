@@ -18,6 +18,8 @@ router.post('/callback', function(req, res) {
 
 	let messages = [];
 
+	messages.push("\n");
+
 	if (!Utility.validateHmac(req.body.hmac, comparisonString, req.app.secretKey)) {
 		messages.push(`A new webhook was received, but it's calculated hmac didn't match what was passed.`);
 		messages.push(`Expected ${req.body.hmac}`);
@@ -28,6 +30,8 @@ router.post('/callback', function(req, res) {
 
 	messages.push(`Headers: ${JSON.stringify(req.headers, null, 2)}`);
 	messages.push(`Data: ${JSON.stringify(req.body, null, 2)}`);
+
+	messages.push("\n");
 
 	let message = messages.join("\n");
 
