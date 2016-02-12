@@ -29,7 +29,7 @@ router.post('/callback', function(req, res) {
 	messages.push(`Headers: ${JSON.stringify(req.headers, null, 2)}`);
 	messages.push(`Data: ${JSON.stringify(req.body, null, 2)}`);
 
-	message = messages.join("\n");
+	let message = messages.join("\n");
 
 	fs.appendFile(
 		path.resolve(__dirname + '/../messages/messages.txt'),
