@@ -8,24 +8,20 @@ const needle = require('needle');
 const querystring = require('querystring');
 const Utility = require('./utility');
 
+/**
+ * Initial OAuth endpoint as specified in `manifest.json`.
+ */
 router.get('/phase-one', function(req, res) {
 	const clientId = req.app.clientId;
 	const secretKey = req.app.secretKey;
 
-	let compareObj = {
+    // first, let's verify that our hmac is consistent with what was sent.
+    let compareObj = {
 		'user_id': req.query.user_id,
 		'timestamp': req.query.timestamp,
 		'site_id': req.query.site_id
 	};
 	let compareString = querystring.stringify(compareObj);
-
-	fs.appendFile(
-		path.resolve(__dirname + '/../messages/messages.txt'),
-		`\nA new installation for user id ${req.query.user_id}, site id ${req.query.site_id} has been initalized.\n`,
-		function(error) {
-			console.error(error);
-		}
-	);
 
 	if (!Utility.validateHmac(req.query.hmac, compareString, secretKey)) {
 		let messages = [];
@@ -36,7 +32,17 @@ router.get('/phase-one', function(req, res) {
 		return res.status(500).send(message);
 	}
 
-	needle.get('https://api.weebly.com/app-center/authorize', function(error, response) {
+    fs.appendFile(
+        path.resolve(__dirname + '/../messages/messages.txt'),
+        `\nA new installation for user id ${req.query.user_id}, site id ${req.query.site_id} has been initalized.\n`,
+        function(error) {
+            console.error(error);
+        }
+    );
+
+    // if we've reached this point, that means we're set.
+    // make a request to start the authorization process
+    needle.get('https://api.weebly.com/app-center/authorize', function(error, response) {
 		let phaseTwoLink = `https://${req.headers.host}/oauth/phase-two`;
 		let callbackParams = {
 			'client_id': clientId,
@@ -56,10 +62,15 @@ router.get('/phase-one', function(req, res) {
 	});
 });
 
+/**
+ * Secondary OAuth endpoint as specified by `phaseTwoLink` in the phase one endpoint
+ */
 router.get('/phase-two', function(req, res) {
 	const clientId = req.app.clientId;
 	const secretKey = req.app.secretKey;
 
+    // we have our authorization code.
+    // now we make a request toe xchange it for a token.
 	needle.post(req.query.callback_url, {
 		client_id: clientId,
 		client_secret: secretKey,
@@ -86,4 +97,7 @@ router.get('/phase-two', function(req, res) {
 	});
 });
 
+/**
+ * @type Express.Router
+ */
 module.exports = router;
