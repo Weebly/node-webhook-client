@@ -5,6 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const Utility = require('./utility');
 
+/**
+ * Callback URL as specified in `manifest.json`
+ */
 router.post('/callback', function(req, res) {
 	let comparisonObject = {
 		'client_id': req.body.client_id,
@@ -20,6 +23,7 @@ router.post('/callback', function(req, res) {
 
 	messages.push("\n");
 
+    // validate the hmac to see if its correct
 	if (!Utility.validateHmac(req.body.hmac, comparisonString, req.app.secretKey)) {
 		messages.push(`A new webhook was received, but it's calculated hmac didn't match what was passed.`);
 		messages.push(`Expected ${req.body.hmac}`);
@@ -46,4 +50,7 @@ router.post('/callback', function(req, res) {
 	res.status(200).send(message);
 });
 
+/**
+ * @type Express.Router
+ */
 module.exports = router;

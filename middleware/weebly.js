@@ -2,6 +2,14 @@
 
 const express = require('express');
 
+/**
+ * Simple middleware which requires WEEBLY_CLIENT_ID
+ * and WEEBLY_SECRET_KEY to be set before continuing
+ *
+ * @param options
+ * @returns {Function}
+ * @constructor
+ */
 let WeeblyMiddleware = function(options) {
 	let clientId = process.env.WEEBLY_CLIENT_ID || options.client_id;
 	let secretKey = process.env.WEEBLY_SECRET_KEY || options.secret_key;
