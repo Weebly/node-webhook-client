@@ -41,7 +41,7 @@ After completing the OAuth flow, an access token will be dumped to the console. 
 By default, this server sets the scope of the OAuth app to solely webhooks, and comes with a POST endpoint at `/webhooks/callback`. To properly set up webhook events, add the following to your `manifest.json`: 
 
 ```json
-{
+"webhooks": {
 	"callback_url": "[ROOT_URL]/webhooks/callback",
 	"events": [
 
