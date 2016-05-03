@@ -21,7 +21,7 @@
   "dashboard_cards": [
     {
       "name": "samplecard",
-      "icon": "files/cards/icon.svg",
+      "icon": "files/cards/icon-alt.svg",
       "label": "Sample Card",
       "version": "1.0.0",
       "default": [
