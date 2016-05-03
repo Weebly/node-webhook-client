@@ -48,7 +48,6 @@ router.get('/phase-one', function(req, res) {
 			'client_id': clientId,
 			'user_id': req.query.user_id,
 			'site_id': req.query.site_id,
-			'scope': 'read:blog,read:site,write:site,webhooks',
 			'redirect_uri': phaseTwoLink
 		};
 		let paramsString = querystring.stringify(callbackParams);
