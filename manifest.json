@@ -7,21 +7,36 @@
   "webhooks": {
     "callback_url": "ROOT_URL/webhooks/callback",
     "events": [
-      "user.update",
-      "site.update", "site.copy", "site.publish", "site.delete",
-      "store.info.update",
-      "store.category.create", "store.category.delete", "store.category.update",
-      "store.product.create", "store.product.update", "store.product.delete",
-      "store.cart.create", "store.cart.update",
-      "store.order.create", "store.order.update", "store.order.pay", "store.order.refund",
-      "store.order.ship", "store.order.return", "store.order.cancel",
-      "member.register", "member.update", "member.destroy",
-      "app.uninstall", "element.instance.delete",
-      "form.submit"
+      "user.update","site.publish", "site.delete", "app.uninstall", "dashboard.card.update"
     ]
   },
+  "scopes": [
+    "read:user",
+    "read:site"
+  ],
   "locale": {
     "default": "en-us",
     "supported": ["en-us"]
-  }
+  },
+  "dashboard_cards": [
+    {
+      "name": "samplecard",
+      "icon": "files/cards/icon-alt.svg",
+      "label": "Sample Card",
+      "version": "1.0.0",
+      "default": [
+        {
+          "type": "text",
+          "title": "This is a sample card.",
+          "value": "It has sample content."
+        },
+        {
+          "type": "stat",
+          "primary_value": "100%",
+          "primary_label": "This is a stat component.",
+          "secondary_value": [0, 3, 2, 5, 1]
+        }
+      ]
+    }
+  ]
 }
