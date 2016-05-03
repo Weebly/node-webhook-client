@@ -49,18 +49,16 @@ By default, this server sets the scope of the OAuth app to solely webhooks, and 
 }
 ```
 
-The `events` key is an array of events; you can pick and choose events from the documentation here: https://dev.weebly.com/use-webhooks.html. 
+The `events` key is an array of events; you can pick and choose events from the documentation here: https://dev.weebly.com/use-webhooks.html. You will also have to include appropriate scopes in a top-level `scopes` array for your app as well. 
 
 On receiving a webhook, the server will write to the `messages/messages.txt` file; this file is accessible by navigating to the default route on your heroku instance (`/`), and thus is accessible via `heroku open`. 
 
-### Sample Manifest
+### Sample Platform Element
 
-We have also included a sample `manifest.json` file in the root directory of this folder. If you wish to do simple tests of the webhook system and the OAuth handshake, follow the following steps.
+We have also included a sample `platform-element/manifest.json` file in the root directory of this folder. If you wish to do simple tests of the webhook system and the OAuth handshake, follow the following steps.
 
 1. Create a new app within the Weebly Developer Admin
 2. Edit the `manifest.json` file to include your app's CLIENT_ID and ROOT_URL (which should be the same as your Heroku deploy's URL)
-3. Zip up the `manifest.json` file, and upload it as a new version of the newly created app
+3. Zip up the `platform-element` oflder, and upload it as a new version of the newly created app
 
 If you wish to implement OAuth and webhooks to your existing app, include the bits of JSON described in the two sections above.
-
-The sample `manifest.json` file has every webhook currently available, which means that a webhook will get sent for every applicable event. To tweak this, remove events as you please.
