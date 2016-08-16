@@ -42,23 +42,21 @@ router.get('/phase-one', function(req, res) {
 
     // if we've reached this point, that means we're set.
     // make a request to start the authorization process
-    needle.get('https://api.weebly.com/app-center/authorize', function(error, response) {
-		let phaseTwoLink = `https://${req.headers.host}/oauth/phase-two`;
-		let callbackParams = {
-			'client_id': clientId,
-			'user_id': req.query.user_id,
-			'site_id': req.query.site_id,
-			'redirect_uri': phaseTwoLink
-		};
-		let paramsString = querystring.stringify(callbackParams);
-		let redirectUrl = `${req.query.callback_url}?${paramsString}`;
+	let phaseTwoLink = `https://${req.headers.host}/oauth/phase-two`;
+	let callbackParams = {
+		'client_id': clientId,
+		'user_id': req.query.user_id,
+		'site_id': req.query.site_id,
+		'redirect_uri': phaseTwoLink
+	};
+	let paramsString = querystring.stringify(callbackParams);
+	let redirectUrl = `${req.query.callback_url}?${paramsString}`;
 
-		if(req.query.version) {
-			redirectUrl += `&version=${req.query.version}`;
-		}
+	if(req.query.version) {
+		redirectUrl += `&version=${req.query.version}`;
+	}
 
-		res.redirect(redirectUrl);
-	});
+	res.redirect(redirectUrl);
 });
 
 /**
