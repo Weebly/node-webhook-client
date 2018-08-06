@@ -18,7 +18,13 @@ More information about the platform can be found at https://dev.weebly.com.
 * Github.com account
 * Weebly Free Developer Account
 
-## Quickstart
+# Usage
+
+* [Heroku One-Button Quickstart](#heroku-one-button-quickstart)
+* [Running with Heroku Container Registry](#running-with-heroku-container-registry)
+* [Heroku Local and ngrok](#running-locally-with-heroku-local-and-ngrok)
+
+## Heroku One-Button Quickstart
 
 Make sure you have the following data available:
 
