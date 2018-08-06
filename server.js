@@ -8,6 +8,8 @@ const WeeblyMiddleware = require('./middleware/weebly.js');
 const oauthRouter = require('./app/oauth-router.js');
 const webhooksRouter = require('./app/webhooks-router.js');
 
+const getDate = require('./outputDate.js');
+
 /**
  * Create the express app
  */
@@ -43,6 +45,8 @@ app.use('/webhooks', wMiddleware, webhooksRouter);
  * Does not require weebly tokens to access
  */
 app.get('/', function(req, res) {
+	//console.log(`Date: ${getDate()}`);
+	//console.log(`Received request at webroot of app`);
 	res.sendFile(path.resolve(`${__dirname}/messages/messages.txt`));
 });
 

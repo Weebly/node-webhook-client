@@ -1,64 +1,113 @@
 # node-webhook-client
 
-This is a simple webhook listener client written in Node.js as example server-side code for the Weebly Developer Platform. More information about the platform can be found at https://dev.weebly.com.
+Simple webhook event subscriber written in Node.js as example server-side code for the Weebly Developer Platform.
+More information about the platform can be found at https://dev.weebly.com.
 
-The server does two main things:
+## What it does:
 
 1. Acts as a server to facilitate an OAuth handshake between Weebly and your app
 2. Provides an endpoint for webhook-enabled apps
 
-### Usage
+### Requirements
 
-The server is intended to be deployed via Heroku, and will look to Heroku-flavored environment variables for specific keys.
+* Docker installed locally
+* Heroku Toolbelt installed locally
+* Heroku.com account
+* Git installed locally
+* Github.com account
+* Weebly Free Developer Account
 
-For Heroku usage, after cloning this repository (and assuming you have the Heroku CLI installed):
+### Quickstart
 
-```
-heroku create
-heroku config:set WEEBLY_CLIENT_ID=[your_apps_client_id]
-heroku config:set WEEBLY_SECRET_KEY=[your_apps_secret_key]
-git push heroku master
-heroku ps:scale web=1
-```
+Make sure you have the following data available:
 
-For non-heroku usage, you can define your keys either within the code, or via other environment variables. 
+* Weebly App Name
+* Weebly App - Client ID
+* Weebly App - Secret
 
-### OAuth
+> NOTE: You obtain Weebly API Keys for your app from the [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/)
 
-This server has two main endpoints for OAuth; `/oauth/phase-one` and `/oauth/phase-two`. These correspond to the two endpoints as defined here: https://dev.weebly.com/configure-oauth.html. In order to enable OAuth on your app, you will need to define the following two lines in your `manifest.json`:
+1. Click on the "Deploy to Heroku" button below, and then update the config vars with the respective values.
 
-```json
-{
-	"callback_url": "[ROOT_URL]/oauth/phase-one",
-	"oauth_final_destination": "editor"
-}
-```
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-After completing the OAuth flow, an access token will be dumped to the console. You can access the heroku logs via `heroku logs --tail`.
+2. Rename `env.tmpl` file to `.env` and edit the file to add the Weebly API Keys, replace the OAuth Callback URL, and Webhook Callback URL.
 
-### Webhooks
+In the `.env` file, replace **WEEBLY_CLIENT_ID** and **WEEBLY_APP_SECRET** values respectively (removing the template string tags `{{` `}}` from the values.
 
-By default, this server sets the scope of the OAuth app to solely webhooks, and comes with a POST endpoint at `/webhooks/callback`. To properly set up webhook events, add the following to your `manifest.json`: 
+For example, if your client id is **123456789**, you would change this line:
 
-```json
-"webhooks": {
-	"callback_url": "[ROOT_URL]/webhooks/callback",
-	"events": [
+`"client_id": "{{YOUR_CLIENT_ID}}",` to look like this: `"client_id": "123456789",`
 
-	]
-}
-```
+Save your changes, and close the `.env` file.
 
-The `events` key is an array of events; you can pick and choose events from the documentation here: https://dev.weebly.com/use-webhooks.html. You will also have to include appropriate scopes in a top-level `scopes` array for your app as well. 
+3. Update `manifest.json` file.
 
-On receiving a webhook, the server will write to the `messages/messages.txt` file; this file is accessible by navigating to the default route on your heroku instance (`/`), and thus is accessible via `heroku open`. 
+Use the secured URL you receive for your new Heroku app (once you have finished installing and deploying it), and replace the base URL **callback_url** and **webhook_callback_url** (leave the paths in tact)
 
-### Sample Platform Element
+For example, if your heroku app URL is: **https://custom-jello-123.herokuapp.com**, you would change this line:
 
-We have also included a sample `platform-element/manifest.json` file in the root directory of this folder. If you wish to do simple tests of the webhook system and the OAuth handshake, follow the following steps.
+`"callback_url": "{{YOUR_SECURE_APP_ROOT_URL}}/oauth/phase-one",` to look like this: `"callback_url": "https://custom-jello-123.herokuapp.com/oauth/phase-one", 
 
-1. Create a new app within the Weebly Developer Admin
-2. Edit the `manifest.json` file to include your app's CLIENT_ID and ROOT_URL (which should be the same as your Heroku deploy's URL)
-3. Zip up the `platform-element` folder, and upload it as a new version of the newly created app
+Once you have updated both the `callback_url` and the `webhook_callback_url` values, save and exit the `manifest.json` file.
 
-If you wish to implement OAuth and webhooks to your existing app, include the bits of JSON described in the two sections above.
+3. Create a ZIP archive of the: `manifest.json`, `icon.svg` files.
+
+4. Login to [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/) and upload a new version of your app (selecting the ZIP file you just created)
+
+5. Install the new draft version of your app into your Weebly Developer Test Site, and view the logs in heroku
+
+`heroku logs --tail`
+
+6. You can generate webhook events by logging into and out of your [Weebly Developer Site](https://weebly.com) account.
+
+If you use the Quickstart to run this app, the following directions for use with Heroku Local and Heroku Container Registry may not operate as expected.
+
+
+### Running with Heroku Container Registry
+
+1. Clone the code base to your local machine
+
+`git clone https://github.com/weebly/node-webhook-client`
+
+2. Change your present working directory (PWD) into the newly cloned repository directory
+
+`cd node-webhook-client/`
+
+3. Login to Heroku and Heroku Container, to obtain the URL for your remote Heroku app
+
+`heroku login`
+
+`heroku container:login`
+
+`heroku create` (copy the secured URL beginning with **https://** you will need that to update the `manifest.json` later) 
+
+4. Rename `env.tmpl` file to `.env` and edit the file to add the Weebly API Keys, replace the OAuth Callback URL, and Webhook Callback URL.
+
+You obtain Weebly API Keys for your app from the [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/). In the `.env` file, replace the value for **WEEBLY_CLIENT_ID** with your app's Client ID (making sure to remove template string tags `{{` `}}`` from the values.
+
+For example, if your client id is **123456789**, you would change this line:
+
+`"client_id": "{{YOUR_CLIENT_ID}}",` to look like this: `"client_id": "123456789",`
+
+Update Your Secured App Root URL you obtained from the `heroku create` command and replace the the root URL respectively for: **oauth_callback_url** and **webhook_callback_url** (leave the paths in tact)
+
+5. Set your Weebly API Keys as environment variables on the Heroku app
+
+`heroku config:set WEEBLY_CLIENT_ID=[your_app_client_id]`
+`heroku config:set WEEBLY_SECRET_KEY=[your_app_secret_key]`
+
+6. Build the image and push to Container Registry
+
+`heroku container:push web`
+
+7. Release the image to your app
+
+`heroku container: release web`
+
+8. Open the app in your browser
+
+`heroku open`
+
+
+### Running locally with Heroku Local and ngrok
