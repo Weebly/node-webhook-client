@@ -7,6 +7,7 @@ More information about the platform can be found at https://dev.weebly.com.
 
 1. Acts as a server to facilitate an OAuth handshake between Weebly and your app
 2. Provides an endpoint for webhook-enabled apps
+3. Writes events to console.log for the app
 
 ### Requirements
 
@@ -51,15 +52,19 @@ For example, if your heroku app URL is: **https://custom-jello-123.herokuapp.com
 
 Once you have updated both the `callback_url` and the `webhook_callback_url` values, save and exit the `manifest.json` file.
 
-3. Create a ZIP archive of the: `manifest.json`, `icon.svg` files.
+4. Create a ZIP archive of the: `manifest.json`, `icon.svg` files.
 
-4. Login to [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/) and upload a new version of your app (selecting the ZIP file you just created)
+5. Login to [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/) and upload a new version of your app (selecting the ZIP file you just created)
 
-5. Install the new draft version of your app into your Weebly Developer Test Site, and view the logs in heroku
+6. Install the new draft version of your app into your Weebly Developer Test Site, and view the logs in heroku
 
 `heroku logs --tail`
 
-6. You can generate webhook events by logging into and out of your [Weebly Developer Site](https://weebly.com) account.
+7. You can generate webhook events by logging into and out of your [Weebly Developer Site](https://weebly.com) account.
+
+8. Open your heroku app and if you see "It works!" the app is running.
+
+From here, you would want to update the `app/webhooks-router.js` file with logic to do more than just log the events to the console.
 
 If you use the Quickstart to run this app, the following directions for use with Heroku Local and Heroku Container Registry may not operate as expected.
 

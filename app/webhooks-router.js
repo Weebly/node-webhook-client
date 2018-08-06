@@ -39,13 +39,7 @@ router.post('/callback', function(req, res) {
 
 	let message = messages.join("\n");
 
-	fs.appendFile(
-		path.resolve(__dirname + '/../messages/messages.txt'),
-		message,
-		function(err) {
-			console.error(err);
-		}
-	);
+	console.log(message);
 
 	res.status(200).send(message);
 });
