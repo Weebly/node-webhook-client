@@ -8,6 +8,8 @@ const WeeblyMiddleware = require('./middleware/weebly.js');
 const oauthRouter = require('./app/oauth-router.js');
 const webhooksRouter = require('./app/webhooks-router.js');
 
+const getDate = require('./outputDate.js');
+
 /**
  * Create the express app
  */
@@ -43,12 +45,14 @@ app.use('/webhooks', wMiddleware, webhooksRouter);
  * Does not require weebly tokens to access
  */
 app.get('/', function(req, res) {
+	//console.log(`Date: ${getDate()}`);
+	//console.log(`Received request at webroot of app`);
 	res.sendFile(path.resolve(`${__dirname}/messages/messages.txt`));
 });
 
 /**
- * Listen on environment port or 8080
+ * Listen on environment port or 3000
  */
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 3000);
 
-console.log(`\nListening on http://localhost:${process.env.PORT || 8080}\n`);
+console.log(`\nListening on http://localhost:${process.env.PORT || 3000}\n`);
