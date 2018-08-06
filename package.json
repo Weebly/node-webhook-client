@@ -4,6 +4,7 @@
 	"description": "Subscribes and handles receiving Weebly Webhook events.",
 	"main": "server.js",
 	"scripts": {
+		"start": "nodemon server.js",
 		"test": "echo \"no tests specified\" && exit 1"
 	},
 	"author": "Weebly",
