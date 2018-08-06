@@ -1,6 +1,6 @@
 {
 	"name": "node-webhook-client",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Subscribes and handles receiving Weebly Webhook events.",
 	"main": "server.js",
 	"scripts": {
@@ -16,7 +16,8 @@
 		"dotenv": "^4.0.0",
 		"express": "~4.15.2",
 		"hbs": "~4.0.1",
-		"jsonwebtoken": "^5.4.0"
+		"jsonwebtoken": "^5.4.0",
+		"needle": "^2.2.1"
 	},
 	"engines": {
 		"node": "8.11.1"
