@@ -17,5 +17,9 @@
 	},
 	"engines": {
 		"node": "5.5.0"
+	},
+	"devDependencies": {
+		"dotenv": "^6.0.0",
+		"dotenv-expand": "^4.2.0"
 	}
 }

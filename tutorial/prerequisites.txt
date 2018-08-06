@@ -1,0 +1,19 @@
+1. If you do not already have a Weebly account, [Create a Free Basic Weebly account](http://www.weebly.com/)
+
+2. [Create a Weebly Developer Account](https://dev.weebly.com/pf_apps_devAccount.html)
+
+3. Login to the [Weebly Developer Admin Portal](http://www.weebly.com/developer-admin) (used to create and manage your Weebly apps)
+
+4. [Register a new Weebly App](https://dev.weebly.com/pf_apps_register.html), this is where you obtain API Keys for the app you will build in this tutorial.
+
+5. Create a local project directory where all the source code will reside for this app
+
+6. Git/Github Desktop installed on your local workstation, and then [clone the repository](github-mac://openRepo/https://github.com/Weebly/node-webhook-client) to your local system: `git clone https://github.com/Weebly/node-webhook-client` (make sure this is NOT a child of the local project directory from Step #5)
+
+7. Your favorite code editor (I like ViM personally)
+
+8. A browser for testing and debugging the client-side application (Google Chrome or Firefox Developer Edition are both favorites of mine)
+
+9. [ngrok - secure tunneling proxy](https://ngrok.com/) installed on your local workstation (used for local development and testing)
+
+10. [Heroku](https://www.heroku.com/) account and the [Heroku Toolbelt](https://devcenter.heroku.com/articles/heroku-cli) installed on your local workstation (used to deploy/testing on Heroku PaaS)

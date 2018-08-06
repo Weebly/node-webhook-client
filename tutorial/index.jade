@@ -1,25 +1,200 @@
-.chapter(data-title='Your New Viewsaurus Tutorial')
+.chapter(data-title='Weebly Node.js Webhook Client Tutorial')
   .step(data-title='Welcome!', data-file='tutorial/config.json')
-    h2 Welcome to Viewsaurus
-
-    p Thanks for writing a Viewsaurus tutorial! If you're new to Viewsaurus, feel free to click through this brief tutorial showing you how a Viewsaurus tutorial is structured.
+    h2 Welcome!
 
     p The tutorial's navigation controls are located above this text. Use <i class="fa fa-fw fa-play"></i> to move to the next step of the tutorial. Use <i class="fa fa-fw fa-play fa-rotate-180"></i> to move to the previous step of the tutorial (if there is one). Use <i class="fa fa-fw fa-list"></i> to see an overview of all the steps in the tutorial.
 
-    p Let's begin by walking through the files generated for you in the `tutorial` directory with the `saurus new` command - those files are actually what is being used to show you this tutorial right now!
+    h3 What You Will Learn
+
+    p How [Weebly Node.js Webhook Client](https://github.com/Weebly/node-webhook-client) works with a light code walk through
+    
+    p How to setup and code a basic Webhook Subscription app that consumes the library
+
+    p How to run this tutorial app locally and remotely
+
+  .step(data-title='Prerequisites', data-file='tutorial/prerequisites.txt')
+    :markdown
+      ## What You Will Need
+
+      1. [Weebly Retail Account](https://www.weebly.com/)
+      2. [Weebly Developer Account](https://dev.weebly.com/pf_apps_devAccount.html)
+      3. [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
+      4. [Weebly App](https://dev.weebly.com/pf_apps_register.html)
+      5. [Weebly Node.js Webhook Client](https://github.com/Weebly/node-webhook-client) cloned locally
+      6. [Git](https://git-scm.com/downloads) installed on your local workstation
+      7. [ngrok](https://ngrok.com/) installed on your local workstation
+      8. [Heroku Account](https://www.heroku.com/) and [Heroku Toolbelt](https://devcenter.heroku.com/articles/heroku-cli) installed on your local workstation
+      9. Your favorite code editor
+      10. Browser (Google Chrome is recommended)
+
+  .step(data-title='Register Your App', data-file='tutorial/prerequisites.txt', data-highlight='1-7')
+    :markdown
+      ## Define Your Weebly App to Obtain API Keys
+
+      Login to the [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin) and then [Register a New App](https://dev.weebly.com/pf_apps_register.html) you will use for this tutorial.
+
+      App names must be unique across all apps in the Weebly Platform.
+
+      > Replace the template string {{PREFIX}}  below with your personal prefix, I recommend using the first character of your first name and the first three characters of your last name.
+      > Example: If your name is James Gunn, you would name the directory `jgun-event-consumer`.
+
+      1. App Name: `{{PREFIX}}-whsub` (short for webhook subscriber)
+      2. Category: `Services`
+
+  .step(data-title='Local App Directory', data-file='tutorial/prerequisites.txt', data-highlight='9')
+    :markdown
+      ## Create Source Code Directory 
+
+      Now that you have your API Keys available, make a new local project directory where you will author the source code for the application:
+      
+      > Replace the template string {{PREFIX}}  below with your personal prefix, I recommend using the first character of your first name and the first three characters of your last name.
+      > Example: If your name is James Gunn, you would name the directory `jgun-event-consumer`.
+
+      `mkdir {{PREFIX}}-wh-sub`
+
+      You can prevent confusion and mismanaged apps easier by keeping the local app directory and the Weebly app name the same.
+
+  .step(data-title='Initialize Git', data-file='tutorial/prerequisites.txt', data-highlight='11')
+    :markdown
+      ## Establish SCM with Git
+
+      How to use Git is outside the scope of this tutorial, there are plenty of learning resources, and if you're brand new to Git I would recommend the [Udemy - Git Started with Github Free Course](https://www.udemy.com/git-started-with-github/).
+
+      Let's change our present working directory (pwd) into the local app directory we created in the previous step...
+
+      `cd {{PREFIX}}-wh-sub`
+
+      Now, we can initialize Git...
+
+      `git init`
+
+
+  .step(data-title='Local App URL Setup', data-file='tutorial/prerequisites.json', data-highlight='17')
+    :markdown
+      ## Create ngrok URL
+
+      Please visit [ngrok.com](https://ngrok.com/) to either [login](https://dashboard.ngrok.com/user/login) or [sign up](https://dashboard.ngrok.com/user/signup) to receive your ngrok account.
+
+      Then, if you have not already, please [download and setup](https://ngrok.com/download).
+
+      Once you have completed ngrok setup, open a new terminal window or tab, and expose a local web server to the internet:
+
+      `ngrok http 80`
+
+      This will produce print the following information...
+
+      ```
+        ngrok by @inconshreveable
+
+        Tunnel Status                 online
+        Version                       2.0/2.0
+        Web Interface                 http://127.0.0.1:4040
+        Forwarding                    http://92832de0.ngrok.io -> localhost:80
+        Forwarding                    https://92832de0.ngrok.io -> localhost:80
+
+        Connnections                  ttl     opn     rt1     rt5     p50     p90
+                                  0       0       0.00    0.00    0.00    0.00
+      ```
+      
+      The **Forwarding** secure URL (in the above case: `https://92832de0.ngrok.io`) is your **Local App URL**. Please keep this terminal window open, you will need that in a moment.
+
+
+  .step(data-title='Remote App URL Setup', data-file='tutorial/prerequisites.txt', data-highlight='19')
+    :markdown
+      ## Create Heroku App and URL
+
+      The next thing you need to do is setup your remote app URL. You will need a valid and current Heroku account to continue.
+      
+      Either [Log In to Heroku](https://id.heroku.com/), or if you do not have a Heroku account [Sign Up for Heroku now](https://signup.heroku.com).
+
+      The [Heroku Toolbelt CLI](https://devcenter.heroku.com/articles/heroku-cli) must installed on your local workstation to proceed, please take a moment and do that now if you haven't already.
+
+      You shold already be in the local app source code directory root we created earlier. If your `pwd` is not in the root of the project directory, please `cd {{PREFIX}}-wh-sub` now..
+
+      Login to the Heroku CLI: `heroku login` (then enter your credentials)
+
+      App names on heroku must be unique across all of Heroku, so you will want to use your prefix here as well.
+
+      > Replace the template string {{PREFIX}}  below with your personal prefix, I recommend using the first character of your first name and the first three characters of your last name.
+      > Example: If your name is James Gunn, you would name the directory `jgun-event-consumer`.
+
+      Create a new Heroku app: `heroku apps:create {{PREFIX}}-whsub` 
+
+      This will output something similar to the following example...
+
+      ```
+        Creating ⬢ prefix-wh-sub... done
+        https://prefix-wh-sub.herokuapp.com/ | https://git.heroku.com/prefix-wh-sub.git
+        Git remote heroku added
+      ```
+
+      You will want to copy/paste the URL shown here, this is your **Remote App URL** and we will need this in the next step.
+
+      Congratulations! You have completed all the prepartions for the app, now let's setup our environment variables for the app...
+
+  .step(data-title='Environment Variables', data-file='tutorial/env.tmpl')
+    :markdown
+      ## Setup Environment Variables
+
+      Rename the environment variable template file:
+      
+      `mv env.tmpl .env`
+      
+      Our code will use [dotenv](https://www.npmjs.com/package/dotenv) to load local development environment variables from the `.env` file.
+      Environment variables define high-level configuration parametersyour app needs to operate.
+
+      Next, open `.env` file for editing. You are going to update the following values:
+
+      * `COMPANY_DISPLAY_NAME`: Set to your company name
+      * `WEEBLY_CLIENT_ID`: Copy/Paste your app **Client ID** from [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
+      * `WEEBLY_CLIENT_SECRET`: Copy/Paste your app **Secret** from [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
+      * `WEEBLY_APP_NAME`: Replace {{PREFIX}} with your first inital and the first three characters of your last name
+      * `WEEBLY_TEST_SITE_URL`: Set to your [Weebly Developer Test Site](https://dev.weebly.com/pf_apps_testsite.html)
+      * `HEROKU_APP_NAME`: Set to your Heroku app name here
+      * `HEROKU_APP_URL`: Paste your **Remote App URL** (heroku) here
+      * `NGROK_APP_URL`: Paste your **Local App URL** (ngrok) here
+
+      Save your changes, and close the `.env` file, you're all done with the Environment Variables!
+
+  .step(data-title='Create the App Manifest', data-file='tutorial/manifest.json')
+    :markdown
+      ## Weebly Manifest
+
+      Every app you create for Weebly App Center must have an associated `manifest.json` file (stored at the root of the project ZIP file you upload to Weebly Developer Admin Portal).
+      
+      The `manifest.json` contains metadata about your app and instructs Weebly how to interact with your app as well as what permissions (aka: *scopes*) your app requires customers to authorize for API access.
+      
+      The `manifest.json` schema must adhere to the Weebly Platform API version upon which your app is targeted to operate. For complete information about this schema, read [Configure Manifest Properties](https://dev.weebly.com/pf_apps_manifest.html) in the Weebly Developer Docs.
+      
+      Rename the manifest template file: `mv manifest.tmpl manifest.json`. then  open `manifest.json` for editing. You are going to replace the following template string placeholders with actual values:
+
+      * `WEEBLY_CLIENT_ID`: Copy/Paste/Replace {{YOUR_CLIENT_ID}} with your app's **Client ID** from [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
+      * `SERVER_ROOT_URL`: Copy/Paste/Replace {{either your Heroku URL or ngrok URL
+      * `SERVER_ROOT_URL`: Copy/Paste either your Heroku URL or ngrok URL
 
   .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
     :markdown
       ## Configuration
 
-      The first file we'll look at is `config.json`. This contains high-level configuration information about your tutorial. This JSON file contains several properties you can declare about your tutorial:
+  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
+    :markdown
+      ## Configuration
 
-      * `title`: This is the title of your tutorial which will show on the first page
-      * `description`: This is a string of text that will appear above the "Start" button for your tutorial.
-      * `repo`: This is the GitHub repo that your code lives in. Right now we assume all projects are hosted there, but we'll likely make this agnostic in the future.
-      * `heroku`: This indicates whether or not your project supports instant deployment with the [Heroku Button](https://blog.heroku.com/archives/2014/8/7/heroku-button)
+  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
+    :markdown
+      ## Configuration
 
-      Now, let's take a look at the first file that contains the actual content of the tutorial, `index.jade`.
+  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
+    :markdown
+      ## Configuration
+
+  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
+    :markdown
+      ## Configuration
+
+  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
+    :markdown
+      ## Configuration
 
   .step(data-title='Step Two')
     h2 Under Construction
