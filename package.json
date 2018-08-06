@@ -14,7 +14,7 @@
 		"cookie-parser": "~1.4.3",
 		"debug": "~2.6.3",
 		"dotenv": "^4.0.0",
-		"express": "~4.15.2",
+		"express": "^4.16.3",
 		"hbs": "~4.0.1",
 		"jsonwebtoken": "^5.4.0",
 		"needle": "^2.2.1"
