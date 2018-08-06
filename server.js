@@ -47,8 +47,8 @@ app.get('/', function(req, res) {
 });
 
 /**
- * Listen on environment port or 8080
+ * Listen on environment port or 3000
  */
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 3000);
 
-console.log(`\nListening on http://localhost:${process.env.PORT || 8080}\n`);
+console.log(`\nListening on http://localhost:${process.env.PORT || 3000}\n`);
