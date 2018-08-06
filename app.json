@@ -1,5 +1,5 @@
 {
-    "name": "Node Weebly Webhook Event Subscriber",
+    "name": "weebly-node-webhook-client",
     "description": "A sample microservice to subscribe and react to Weebly Webhook events.",
     "repository": "https://github.com/Weebly/node-webhook-client",
     "logo": "https://dev.weebly.com/images/weebly_logo.svg",
@@ -20,12 +20,6 @@
         }
     },
     "image": "heroku/nodejs",
-    "formation": {
-        "web": {
-            "quantity": "1",
-            "size": "free"
-        }
-    },
     "repository": "https://github.com/weebly/node-webhook-client",
     "addons": [
         "papertrail:choklad"
