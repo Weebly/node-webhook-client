@@ -3,7 +3,7 @@
 Simple webhook event subscriber written in Node.js as example server-side code for the Weebly Developer Platform.
 More information about the platform can be found at https://dev.weebly.com.
 
-## What it does:
+### What it does:
 
 1. Acts as a server to facilitate an OAuth handshake between Weebly and your app
 2. Provides an endpoint for webhook-enabled apps
@@ -18,7 +18,7 @@ More information about the platform can be found at https://dev.weebly.com.
 * Github.com account
 * Weebly Free Developer Account
 
-### Quickstart
+## Quickstart
 
 Make sure you have the following data available:
 
@@ -69,7 +69,7 @@ From here, you would want to update the `app/webhooks-router.js` file with logic
 If you use the Quickstart to run this app, the following directions for use with Heroku Local and Heroku Container Registry may not operate as expected.
 
 
-### Running with Heroku Container Registry
+## Running with Heroku Container Registry
 
 1. Clone the code base to your local machine
 
@@ -114,5 +114,74 @@ Update Your Secured App Root URL you obtained from the `heroku create` command a
 
 `heroku open`
 
+9. Update `manifest.json` file.
 
-### Running locally with Heroku Local and ngrok
+Use the secured URL you receive for your new Heroku app (once you have finished installing and deploying it), and replace the base URL **callback_url** and **webhook_callback_url** (leave the paths in tact)
+
+For example, if your heroku app URL is: **https://custom-jello-123.herokuapp.com**, you would change this line:
+
+`"callback_url": "{{YOUR_SECURE_APP_ROOT_URL}}/oauth/phase-one",` to look like this: `"callback_url": "https://custom-jello-123.herokuapp.com/oauth/phase-one", 
+
+Once you have updated both the `callback_url` and the `webhook_callback_url` values, save and exit the `manifest.json` file.
+
+10. Create a ZIP archive of the: `manifest.json`, `icon.svg` files.
+
+11. Login to [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/) and upload a new version of your app (selecting the ZIP file you just created)
+
+12. Install the new draft version of your app into your Weebly Developer Test Site, and view the logs in your console
+
+13. You can generate webhook events by logging into and out of your [Weebly Developer Site](https://weebly.com) account.
+
+14. Open your heroku app and if you see "It works!" the app is running.
+
+From here, you would want to update the `app/webhooks-router.js` file with logic to do more than just log the events to the console.
+
+
+
+## Running locally with Heroku Local and ngrok
+
+Make sure you have an [ngrok](https://ngrok.com) account and that it is installed on your local workstation.
+
+1. Clone the code base to your local machine
+
+`git clone https://github.com/weebly/node-webhook-client`
+
+2. Change your present working directory (PWD) into the newly cloned repository directory
+
+`cd node-webhook-client/`
+
+4. Rename `env.tmpl` file to `.env` and edit the file to add the Weebly API Keys, replace the OAuth Callback URL, and Webhook Callback URL.
+
+You obtain Weebly API Keys for your app from the [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/). In the `.env` file, replace the value for **WEEBLY_CLIENT_ID** with your app's Client ID (making sure to remove template string tags `{{` `}}`` from the values.
+
+For example, if your client id is **123456789**, you would change this line:
+
+`"client_id": "{{YOUR_CLIENT_ID}}",` to look like this: `"client_id": "123456789",`
+
+Update Your Secured App Root URL you obtained from **ngrok** and replace the the root URL respectively for: **oauth_callback_url** and **webhook_callback_url** (leave the paths in tact)
+
+5. Update `manifest.json` file.
+
+Use the secured URL you receive for your new Heroku app (once you have finished installing and deploying it), and replace the base URL **callback_url** and **webhook_callback_url** (leave the paths in tact)
+
+For example, if your heroku app URL is: **https://custom-jello-123.herokuapp.com**, you would change this line:
+
+`"callback_url": "{{YOUR_SECURE_APP_ROOT_URL}}/oauth/phase-one",` to look like this: `"callback_url": "https://custom-jello-123.herokuapp.com/oauth/phase-one", 
+
+Once you have updated both the `callback_url` and the `webhook_callback_url` values, save and exit the `manifest.json` file.
+
+6. Create a ZIP archive of the: `manifest.json`, `icon.svg` files.
+
+7. Login to [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin/) and upload a new version of your app (selecting the ZIP file you just created)
+
+8. Start **ngrok** for your app
+
+9. Start your app: `heroku local` (depending upon how you configure ngrok, you may need to change the port used by the app)
+
+10. Install the new draft version of your app into your Weebly Developer Test Site, and view the logs in your console
+
+11. You can generate webhook events by logging into and out of your [Weebly Developer Site](https://weebly.com) account.
+
+12. Open your heroku app and if you see "It works!" the app is running.
+
+From here, you would want to update the `app/webhooks-router.js` file with logic to do more than just log the events to the console.
