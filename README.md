@@ -71,6 +71,8 @@ If you use the Quickstart to run this app, the following directions for use with
 
 ## Running with Heroku Container Registry
 
+* [Heroku Container Registry docs](https://devcenter.heroku.com/articles/container-registry-and-runtime)
+
 1. Clone the code base to your local machine
 
 `git clone https://github.com/weebly/node-webhook-client`
@@ -141,6 +143,9 @@ From here, you would want to update the `app/webhooks-router.js` file with logic
 ## Running locally with Heroku Local and ngrok
 
 Make sure you have an [ngrok](https://ngrok.com) account and that it is installed on your local workstation.
+
+* [Heroku Local docs](https://devcenter.heroku.com/articles/heroku-local)
+* [ngrok docs](https://ngrok.com/docs)
 
 1. Clone the code base to your local machine
 
