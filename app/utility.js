@@ -1,6 +1,14 @@
 "use strict";
 
-var crypto = require('crypto');
+// Determine if `crypto` support is unavailable
+let crypto;
+try {
+  crypto = require('crypto');
+} catch (err) {
+  console.error('crypto support is disabled!');
+  // Unhandled, should halt Node.js process execution completely
+  throw err;
+}
 
 let Utility = {};
 
