@@ -44,33 +44,251 @@
       </div>
       <div class="saurus-progress-bar"></div>
       <div class="saurus-start">
-        <p>Thank you for istalling and using our developerutorial. We will show you the basic functionality of the Weebly Node Webhook Client. Click the &quot;Start&quot; button below to see how Viewsaurus works.</p><a href="#0">Start Tutorial</a>
+        <p>Learn the basic functionality of the Weebly Node Webhook Client. Click the &quot;Start&quot; button below to see how Viewsaurus works.</p><a href="#0">Start Tutorial</a>
       </div>
       <div class="saurus-content">
-<div data-title="Your New Viewsaurus Tutorial" class="chapter">
-  <div data-title="Welcome!" data-file="tutorial/config.json" class="step">
-    <h2>Welcome to Viewsaurus</h2>
-    <p>Thanks for writing a Viewsaurus tutorial! If you're new to Viewsaurus, feel free to click through this brief tutorial showing you how a Viewsaurus tutorial is structured.</p>
-    <p>The tutorial's navigation controls are located above this text. Use <i class="fa fa-fw fa-play"></i> to move to the next step of the tutorial. Use <i class="fa fa-fw fa-play fa-rotate-180"></i> to move to the previous step of the tutorial (if there is one). Use <i class="fa fa-fw fa-list"></i> to see an overview of all the steps in the tutorial.</p>
-    <p>Let's begin by walking through the files generated for you in the `tutorial` directory with the `saurus new` command - those files are actually what is being used to show you this tutorial right now!</p>
-  </div>
-  <div data-title="Tutorial Configuration" data-file="tutorial/config.json" class="step"><h2 id="configuration">Configuration</h2>
-<p>The first file we&#39;ll look at is <code>config.json</code>. This contains high-level configuration information about your tutorial. This JSON file contains several properties you can declare about your tutorial:</p>
+<div data-title="Weebly Node.js Webhook Client Tutorial" class="chapter">
+  <div data-title="Welcome!" data-file="tutorial/config.json" class="step"><h2 id="welcome-">Welcome!</h2>
+<p>The tutorial&#39;s navigation controls are located above this text. Use &lt;i class=&quot;fa fa-fw fa-play&quot;&gt;&lt;/i&gt; to move to the next step of the tutorial. Use &lt;i class=&quot;fa fa-fw fa-play fa-rotate-180&quot;&gt;&lt;/i&gt; to move to the previous step of the tutorial (if there is one). Use &lt;i class=&quot;fa fa-fw fa-list&quot;&gt;&lt;/i&gt; to see an overview of all the steps in the tutorial.</p>
+<h3 id="what-you-will-learn">What You Will Learn</h3>
 <ul>
-<li><code>title</code>: This is the title of your tutorial which will show on the first page</li>
-<li><code>description</code>: This is a string of text that will appear above the &quot;Start&quot; button for your tutorial.</li>
-<li><code>repo</code>: This is the GitHub repo that your code lives in. Right now we assume all projects are hosted there, but we&#39;ll likely make this agnostic in the future.</li>
-<li><code>heroku</code>: This indicates whether or not your project supports instant deployment with the <a href="https://blog.heroku.com/archives/2014/8/7/heroku-button">Heroku Button</a></li>
+<li>How <a href="https://github.com/Weebly/node-webhook-client">Weebly Node.js Webhook Client</a> code operates.</li>
+<li>How to subscribe your app to Weebly Webhook Events</li>
+<li>How to properly handle Weebly Webhook Events</li>
 </ul>
-<p>Now, let&#39;s take a look at the first file that contains the actual content of the tutorial, <code>index.jade</code>.</p>
 
   </div>
-  <div data-title="Step Two" class="step">
-    <h2>Under Construction</h2>
-    <p>more tutorial to come.</p>
+</div>
+<div data-title="App Setup" class="chapter">
+  <div data-title="Register Your Weebly App" data-file="README.md" data-highlight="21-25" class="step"><h2 id="register-your-app">Register Your App</h2>
+<p>To obtain valid API Keys, you must first <a href="https://dev.weebly.com/pf_apps_register.html">register your weebly app</a>.</p>
+<p>Please name this new app uniquely by using the following app naming convention (you will use this later in the tutorial as well): <code>{{PREFIX}}-evt-sub</code></p>
+<p>To ensure a unique naming patter, I recommend setting {{PREFIX}} to the initial of your first name + first three characters of your last name.</p>
+<p>For example, if your name is &quot;James Gunn&quot;, your {{PREFIX}} would be: <code>jgun</code>.</p>
+<p>Set the &#39;category&#39; of your new app to <code>Services</code>.</p>
+
+  </div>
+  <div data-title="Usages" data-file="README.md" data-highlight="21-25" class="step"><h2 id="usages">Usages</h2>
+<p>Please use the instructions <a href="https://github.com/weebly/node-webhook-client#usage">Usages</a> in the <code>README.md</code> file to setup this app for live operation and to see it in action.</p>
+
   </div>
 </div>
-<div class="saurus-files" style="display:none;"><textarea class="saurus-file" data-file="tutorial/config.json" data-mode="json">ewogICAgInRpdGxlIjogIkxlYXJuIGFib3V0IGBub2RlLXdlYmhvb2stY2xpZW50YCIsCiAgICAicmVwbyI6ICI8eW91ciBHaXRIdWIgd2VlYmx5L25vZGUtd2ViaG9vay1jbGllbnQiLAogICAgImRlc2NyaXB0aW9uIjogIlRoYW5rIHlvdSBmb3IgaXN0YWxsaW5nIGFuZCB1c2luZyBvdXIgZGV2ZWxvcGVydXRvcmlhbC4gV2Ugd2lsbCBzaG93IHlvdSB0aGUgYmFzaWMgZnVuY3Rpb25hbGl0eSBvZiB0aGUgV2VlYmx5IE5vZGUgV2ViaG9vayBDbGllbnQuIENsaWNrIHRoZSBcIlN0YXJ0XCIgYnV0dG9uIGJlbG93IHRvIHNlZSBob3cgVmlld3NhdXJ1cyB3b3Jrcy4iLAogICAgImhlcm9rdSI6IGZhbHNlCn0K</textarea>
+<div data-title="Server Basics" class="chapter">
+  <div data-title="Express.js" data-file="server.js" data-highlight="3-5,16-20,56" class="step"><h2 id="about-the-web-server">About the Web Server</h2>
+<p>This app uses the <a href="https://expressjs.com/">Express.js</a> web application framework. Since <a href="https://expressjs.com/en/starter/installing.html">Express.js</a> is well documented, this tutorial will not go into too many details, but there are some specific pieces of code you should understand.</p>
+<p>Express.js allows developers to <a href="https://expressjs.com/en/guide/writing-middleware.html">write middleware</a> for their applications to customize how their applications handle requests and responses.</p>
+<p>While it is outside of the scope of this tutorial, it is important to note, there are other types of middlware Express allows you to use:</p>
+<ul>
+<li><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.application">Application-Level Middleware</a></li>
+<li><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.router">Router-level Middleware</a></li>
+<li><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.error-handling">Error-Handling Middleware</a></li>
+<li><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.built-in">Built-In Middleware</a></li>
+<li><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.third-party">Third-Party Middleware</a></li>
+</ul>
+
+  </div>
+  <div data-title="Application Level Middleware" data-file="server.js" data-highlight="22-36" class="step"><h2 id="application-level-middleware">Application-Level Middleware</h2>
+<p>Express.js allows developers to <a href="https://expressjs.com/en/guide/writing-middleware.html">write middleware</a> for their applications.</p>
+<p>Highlighted is the instantiation of custom <a href="https://expressjs.com/en/guide/using-middleware.html#middleware.application">Express.js - Application-Level Middleware</a> written specifically for the Weebly Node Webhook Client,</p>
+<p>Next, take a look at the code-behind the Weebly Middleware...</p>
+
+  </div>
+  <div data-title="Weebly Middleware" data-file="middleware/weebly.js" data-highlight="5-15,33" class="step"><h2 id="weebly-middleware">Weebly Middleware</h2>
+<p>In case you are not familiar, the Weebly Middleware is a Node.js module that exports a function wrapper.</p>
+<p>The wrapperfunction sets up some internal variables then ensures API Keys have been set either explicitly in code and supplied as arguments, or implicitly in your environment variables or from command line options.</p>
+
+  </div>
+  <div data-title="Accessing API Keys in Requests" data-file="middleware/weebly.js" data-highlight="17-30" class="step"><h2 id="accessing-api-keys-in-requests">Accessing API Keys in Requests</h2>
+<p>This particular middleware exposes your Weebly API Keys as properties of the <a href="https://expressjs.com/en/4x/api.html#req">request</a> in Express.</p>
+<p>This allows you to reference these values from within subsequent Router Middleware in the following manner:</p>
+<ul>
+<li><code>req.app.clientId</code></li>
+<li><code>req.app.clientSecret</code></li>
+</ul>
+
+  </div>
+  <div data-title="Mounting Middleware" data-file="server.js" data-highlight="7-9,38-42" class="step"><h2 id="mounting-middleware">Mounting Middleware</h2>
+<p>Mounting middleware into your app is relatively simple once it is defined, but the order is very important.</p>
+<p>For each HTTP request your app will receives to: <code>/oauth</code> or <code>/webhooks</code> this code defines how it should be handled.</p>
+<p>Specifically, you can see that each route has its own middleware chain and they both share the Weebly (Application-Level) Middleware, which is executed before the Router-Level Middleware for both routes.</p>
+<ul>
+<li>Requests to <code>/oauth[...]</code> will be sent to the Weebly Middleware, and then to the OAuth Routing Middleware</li>
+<li>Requests to <code>/webhooks[...]</code> will be sent to the Weebly Middleware, and then to the Webhook Routing Middleware </li>
+</ul>
+
+  </div>
+</div>
+<div data-title="OAuth - Router Middleware" class="chapter">
+  <div data-title="OAuth - Router Middleware" data-file="app/oauth-router.js" class="step"><h2 id="oauth-middleware">OAuth Middleware</h2>
+<p><code>oauth-router.js</code> is custom <a href="https://expressjs.com/en/guide/using-middleware.html#middleware.router">Express.js Routing Middleware</a> made specifically for Weebly.</p>
+<p>It handles all incoming HTTP requests to <code>/oauth</code> (where &#39;/&#39; is the webroot of the app).</p>
+<p>Please read the <a href="https://dev.weebly.com/pf_apps_authorize_and_install.html">App Authorization and Installation Flow</a> to understand each phase of the OAuth2 Authorization Flow that Weebly apps encounter during installation.</p>
+
+  </div>
+  <div data-title="OAuth - Phase One" data-file="app/oauth-router.js" data-highlight="10-15" class="step"><h2 id="oauth-phase-one">Oauth - Phase One</h2>
+<p>First, the code will accept HTTP <strong>GET</strong> requests going to <code>/oauth/phase-one</code>, and immediately defines the <code>clientId</code> and <code>secretKey</code> variables which were made available from the Weebly Middleware.</p>
+
+  </div>
+  <div data-title="Request Invalidation" data-file="app/oauth-router.js" data-highlight="17-32" class="step"><h2 id="request-validation">Request Validation</h2>
+<p>As a developer, you must <strong>KNOW with great confidence</strong> the inbound requests your web applications can trust.</p>
+<p>In this section of code you can see how to invalidate requests to ensure that requests sent to this particular route can be trusted as coming from Weebly. 
+Here, a comparison object is created and converted into a string (verification HMAC) using identical values to the Weebly generated HMAC.
+then you use these two pieces of data to invalidate the HMAC query parameter received in requests to this route, are actually requests you can trust were sent from Weebly servers.</p>
+<p>You can read the details about this <a href="https://dev.weebly.com/pf_apps_authorize_and_install.html#decode-and-verify-the-hash">here</a>, but to provide you the &#39;gist&#39; of what happens:</p>
+<ol>
+<li>A Weebly site administrator (user) clicks the &quot;Add App&quot; button for your app in <a href="https://www.weebly.com/app-center">Weebly App Center</a></li>
+<li>Weebly presents the &#39;user&#39; with the list of persmissions (<strong>scopes</strong> defined in your <code>manifest.json</code>) that your app is requesting</li>
+<li>The &#39;user&#39; can either authorize (connect) or decline, but assume the &#39;user&#39; accepts for sake of example</li>
+<li>Weebly creates an HMAC-SHA256 encoded hash of the request parameters using your Weebly App <strong>SECRET</strong>, which means <strong>ONLY YOU</strong> should be able to recreate that <strong>EXACT</strong> HMAC string using identical values</li>
+<li>If your <strong>generated</strong> HMAC string is IDENTICAL to the HMAC in the request query parameters, you can consider this a &quot;verified request&quot; (trusting that it came from Weebly) and proceed with code execution</li>
+</ol>
+
+  </div>
+  <div data-title="Request an Authorization Code" data-file="app/oauth-router.js" data-highlight="42-58" class="step"><h2 id="requesting-an-authorization-code">Requesting an Authorization Code</h2>
+<p>Since the request is trusted, you first generate the second phase URL, callback parameters, and version (if included in the original request).</p>
+<p>Then your app tells the <a href="https://expressjs.com/en/4x/api.html#res">Express response object</a> to redirect to the appropriate Weebly URL to obtain an <code>authorization_code</code>.</p>
+<p>If the redirect is successfully formed/accepted, Weebly will respond to your redirect by sending a new HTTP request to containing an <code>authorization_code</code> correlating to the Weebly User and Site.</p>
+
+  </div>
+  <div data-title="OAuth - Phase Two" data-file="app/oauth-router.js" data-highlight="61-66" class="step"><h2 id="oauth-phase-two">Oauth - Phase Two</h2>
+<p>Here, the code designates it will accept HTTP <strong>GET</strong> requests going to <code>/oauth/phase-two</code>, and immediately defines the <code>clientId</code> and <code>secretKey</code> variables which were made available from the Weebly Middleware.</p>
+
+  </div>
+  <div data-title="Obtaining an Access Token" data-file="app/oauth-router.js" data-highlight="68-90" class="step"><h2 id="exchanging-authorization-code-for-access-token">Exchanging Authorization Code for Access Token</h2>
+<p><strong>NOTE:</strong> It is of CRITICAL IMPORTANCE you take every measure possible to secure and mitigate attackers from obtaining your Weebly API Keys (including your app <code>manifest.json</code> file).</p>
+<p>There are a few things happening here to exchange the <code>authorization_code</code> for a valid <code>access_token</code>:</p>
+<ol>
+<li>The body is formed for the HTTP POST request which includes: <code>authorization_code</code>, <code>client_id</code>, <code>client_secret</code></li>
+<li>The <code>redirect_url</code> parameter is used as the destination for the subsequent code-token exchange request</li>
+<li>App initiates POST request to <strong>redirect_url</strong> (Weebly API endpoint <code>/app-center/oauth/access_token</code></li>
+<li>An <code>access_token</code> will be received upon a successful request, and should be stored securely by your app for future <a href="https://dev.weebly.com/pf_apis_about.html">Weebly API</a> requests</li>
+</ol>
+
+  </div>
+  <div data-title="Connecting Your App" data-file="app/oauth-router.js" data-highlight="77-90" class="step"><h2 id="connecting-your-app">Connecting Your App</h2>
+<p>Many developers get confused about when their app is actually &quot;installed&quot; and &quot;connected&quot; to a Weebly site.</p>
+<p>Logging new <strong>access_tokens</strong> to &#39;/messages/messages.txt&#39; file is not very useful or productive.
+What this section of  code represents is the correct <strong>point-in-time</strong> during the <a href="https://dev.weebly.com/pf_apps_authorize_and_install.html#redirect-back-to-weebly-to-trade-auth-code-for-permanent-token">App Authorization and Installation Flow</a> when your app/service has an opportunity to ensure the most optimal User Experience by performing any:</p>
+<ul>
+<li>Account/User setup</li>
+<li>New User Verification(s)</li>
+<li>Weebly Plan/Feature Checks</li>
+<li>Security Checks</li>
+</ul>
+<p>These types of service initializations should occur prior to your app <a href="https://dev.weebly.com/pf_apps_authorize_and_install.html#redirect-to-final-destination">redirecting to the final destination</a>, which you can see in the next step of the tutorial.</p>
+
+  </div>
+  <div data-title="Connecting Your App" data-file="app/oauth-router.js" data-highlight="92" class="step"><h2 id="final-redirect-connecting-your-app">Final Redirect - Connecting your App</h2>
+<p>To reach this point in the code, your app must have:</p>
+<ol>
+<li>Successfully validated an installation request from Weebly to your <code>manifest.json</code> <em>callback_url</em> property</li>
+<li>Redirected back to Weebly with the expected request/payload</li>
+<li>Successfully received an <code>authorization_code</code> from the <strong>phase-two</strong> portion of the OAuth2 Authorization Flow</li>
+<li>Redirected back to Weebly to exchange your <code>authorization_code</code> for a valid API <code>access_token</code></li>
+<li>Executed any account/user setup or validations interally for your app or service</li>
+</ol>
+<p>This final redirect indicates to Weebly that your app has completed all necessary setup and configuration operations, and the app should be considered &quot;installed&quot; and &quot;connected&quot;.</p>
+<p>If your app does not perform this final redirect, your app will be in a <strong>disconnected</strong> state.</p>
+
+  </div>
+</div>
+<div data-title="Webhook - Router Middleware" class="chapter">
+  <div data-title="Webhook Router Middleware" data-file="app/webhooks-router.js" class="step"><h2 id="webhooks-middleware">Webhooks Middleware</h2>
+<p><code>webhooks-router.js</code> is custom <a href="https://expressjs.com/en/guide/using-middleware.html#middleware.router">Express.js Routing Middleware</a> handling all incoming HTTP requests beginning with <code>/webhooks</code>.</p>
+<p>The URL where events will be sent is defined in <code>webhooks.callback_url</code> property of your <code>manifest.json</code>.</p>
+<p>Please read the <a href="https://dev.weebly.com/pf_wh_webhooks.html#receive-webhooks">Receiving Webhooks</a> to understand the data Weebly will POST to your app when events occur to which your app has subscribed.</p>
+
+  </div>
+  <div data-title="Subscribing to Events" data-file="manifest.json" data-highlight="9-11" class="step"><h2 id="subscribing-to-events">Subscribing to Events</h2>
+<p>Weebly apps can <a href="https://dev.weebly.com/pf_wh_webhooks.html#subscribe-to-webhooks">subscribe to events</a>. There are several different types of events available for your app to be notified about when they occur upon a site where your app is installed:</p>
+<ul>
+<li><a href="https://dev.weebly.com/pf_wh_user.html">User Events</a></li>
+<li><a href="https://dev.weebly.com/pf_wh_site.html">Site Events</a></li>
+<li><a href="https://dev.weebly.com/pf_wh_store.html">Store Events</a></li>
+<li><a href="https://dev.weebly.com/pf_wh_member.html">Membership Events</a></li>
+<li><a href="https://dev.weebly.com/pf_wh_app.html">App Events</a></li>
+<li><a href="https://dev.weebly.com/pf_wh_form.html">Form Events</a></li>
+<li><a href="https://dev.weebly.com/pf_wh_blog.html">Blog Events</a></li>
+<li><a href="https://dev.weebly.com/pf_wh_card.html">Dashboard Card Events</a></li>
+</ul>
+<p>You define the types of Weebly Events your app will receive in the <strong>webhooks.events</strong> property in your <code>manifest.json</code>.</p>
+<p>The default <code>events</code> this app subscribes to are: <code>app.uninstall</code>, <code>user.update</code>, <code>site.publish</code>, <code>site.delete</code>. These are all crucial events for any Weebly App and are highly recommended for subscription.</p>
+
+  </div>
+  <div data-title="Receiving Events" data-file="app/webhooks-router.js" data-highlight="9-11" class="step"><h2 id="subscribing-to-events">Subscribing to Events</h2>
+<p>  The code here indicates this app will only HTTP POST requests sent to:</p>
+<p>  <code>{{YOUR_APP_ROOT_URL}}/webhooks/callback</code> will be accepted, but you still need to peform request invalidation to be certain Weebly sent the request.</p>
+
+  </div>
+  <div data-title="Invalidating Webhook Event Requests" data-file="app/webhooks-router.js" data-highlight="12-33" class="step"><h2 id="invalidating-webhook-event-requests">Invalidating Webhook Event Requests</h2>
+<p>To prevent malicious attackers from spoofing or forging requests to your <code>webhook.callback_url</code> you need to invalidate the request.</p>
+<p>All Webhook Event POST Request Body will contain:</p>
+<ul>
+<li><code>client_id</code>: Your app&#39;s Client ID from the Weebly Developer Admin Portal</li>
+<li><code>client_version</code>:  The version of your app which generated the event (helpful in cases of managing multiple versions)</li>
+<li><code>event</code>: The event name (according to the Weebly Webhook docs)</li>
+<li><code>timestamp</code>: Unix epoch timestamp when the event occurred according to Weebly servers</li>
+<li><code>data</code>: Event-specific data, see the respective Webhook Event Type docs</li>
+<li><code>hmac</code>: <code>client_id,</code>client_version<code>,</code>event<code>,</code>timestamp<code>, and</code>data` sent in the request to be used to invalidate incoming event requests</li>
+</ul>
+<p>Similar to verifying the HMAC hash received on app installation, here we prepare a comparison object/string and then re-generate the HMAC to be certain the request was actually created and sent by Weebly.</p>
+
+  </div>
+  <div data-title="Handling Events" data-file="app/webhooks-router.js" data-highlight="32-42" class="step"><h2 id="handling-events">Handling Events</h2>
+<p>Here, the code is merely logging the event headers and requests to console, but this is an opportunity for your app to become event-driven!</p>
+<p>In production apps, this is the point-in-time to handle events allowing your app to behave proactively, addressing concerns such as:</p>
+<ul>
+<li>Saving events to persistent storage (logging)</li>
+<li>Making relevant Weebly API requests based on your app business logic</li>
+<li>Performing internal data update(s)for the respective customer/site</li>
+<li>Revoking access/permissions (in cases of <code>app.uninstall</code> or <code>site.delete</code> events)</li>
+<li>Alerting/Reporting to customer(s) of related changes within your app/service</li>
+</ul>
+
+  </div>
+  <div data-title="Webhook Event Responses" data-file="app/webhooks-router.js" data-highlight="44" class="step"><h2 id="webhook-event-responses">Webhook Event Responses</h2>
+<p>When your app has received a valid and verified Weebly Event Request, it is expected that your server will respond with an HTTP 200 Status Code before the request times out.</p>
+<p>If you respond with anything other than an HTTP 200 to a valid Weebly Webhook Event Request, Weebly will continue to retry sending the Webhook event to your server up to 12 times over a 48 hour period.</p>
+
+  </div>
+</div>
+<div data-title="Next Steps" class="chapter">
+  <div data-title="Build Custom Event Handlers" class="step"><h2 id="custom-event-handlers">Custom Event Handlers</h2>
+<p>A natural next step is for you to develop custom event handlers that interoperate with your business systems.</p>
+<p>This app is already subscribed to: <code>app.uninstall</code>, <code>site.publish</code>, <code>site.delete</code>, and <code>user.update</code> events.</p>
+<p>How would you implement custom handlers for each of these types of events?</p>
+
+  </div>
+  <div data-title="Persistent Data Storage" class="step"><h2 id="persistent-data-storage">Persistent Data Storage</h2>
+<p>You&#39;ll want to have a persistent data store to handle:</p>
+<ul>
+<li>App Installation states (OAuth2 Authorization Flow)</li>
+<li>Site Publish Events (especially if you have developed a <a href="https://dev.weebly.com/pf_apps_elements.html">Weebly Element App</a>.</li>
+<li>Deactivate or delete App Installations when you receive new <code>app.uninstall</code> or <code>site.delete</code> events</li>
+<li>Prevent data loss when this app is unloaded from memory</li>
+</ul>
+
+  </div>
+</div>
+<div data-title="Conclusion" class="chapter">
+  <div data-title="Share Your Feedback!" class="step"><h2 id="share-your-feedback">Share Your Feedback</h2>
+<p>To help us improve this tutorial, and the code we open source, we need your feedback:</p>
+<ul>
+<li>Find an issue in this tutorial or the code? <a href="https://github.com/Weebly/node-webhook-client/issues">Create an issue on Github Issue Tracker</a>.</li>
+<li>Did this tutorial or code help you? <a href="https://twitter.com/weebly_eng">Share the love on Twitter</a>.</li>
+<li>Find a better way to do things? <a href="https://github.com/Weebly/node-webhook-client/pulls">Submit a Pull Request</a></li>
+<li>Have an idea or need some help? Create a developer support case at: <a href="mailto:dev-support@weebly.com">dev-support@weebly.com</a></li>
+</ul>
+
+  </div>
+</div>
+<div class="saurus-files" style="display:none;"><textarea class="saurus-file" data-file="tutorial/config.json" data-mode="json">ewogICAgInRpdGxlIjogIkxlYXJuIGFib3V0IGBub2RlLXdlYmhvb2stY2xpZW50YCIsCiAgICAicmVwbyI6ICJ3ZWVibHkvbm9kZS13ZWJob29rLWNsaWVudCIsCiAgICAiZGVzY3JpcHRpb24iOiAiTGVhcm4gdGhlIGJhc2ljIGZ1bmN0aW9uYWxpdHkgb2YgdGhlIFdlZWJseSBOb2RlIFdlYmhvb2sgQ2xpZW50LiBDbGljayB0aGUgXCJTdGFydFwiIGJ1dHRvbiBiZWxvdyB0byBzZWUgaG93IFZpZXdzYXVydXMgd29ya3MuIiwKICAgICJoZXJva3UiOiB0cnVlCn0K</textarea>
+<textarea class="saurus-file" data-file="README.md" data-mode="markdown">IyBub2RlLXdlYmhvb2stY2xpZW50CgpTaW1wbGUgd2ViaG9vayBldmVudCBzdWJzY3JpYmVyIHdyaXR0ZW4gaW4gTm9kZS5qcyBhcyBleGFtcGxlIHNlcnZlci1zaWRlIGNvZGUgZm9yIHRoZSBXZWVibHkgRGV2ZWxvcGVyIFBsYXRmb3JtLgpNb3JlIGluZm9ybWF0aW9uIGFib3V0IHRoZSBwbGF0Zm9ybSBjYW4gYmUgZm91bmQgYXQgaHR0cHM6Ly9kZXYud2VlYmx5LmNvbS4KCiMjIyBXaGF0IGl0IGRvZXM6CgoxLiBBY3RzIGFzIGEgc2VydmVyIHRvIGZhY2lsaXRhdGUgYW4gT0F1dGggaGFuZHNoYWtlIGJldHdlZW4gV2VlYmx5IGFuZCB5b3VyIGFwcAoyLiBQcm92aWRlcyBhbiBlbmRwb2ludCBmb3Igd2ViaG9vay1lbmFibGVkIGFwcHMKMy4gV3JpdGVzIGV2ZW50cyB0byBjb25zb2xlLmxvZyBmb3IgdGhlIGFwcAoKIyMjIFJlcXVpcmVtZW50cwoKKiBEb2NrZXIgaW5zdGFsbGVkIGxvY2FsbHkKKiBIZXJva3UgVG9vbGJlbHQgaW5zdGFsbGVkIGxvY2FsbHkKKiBIZXJva3UuY29tIGFjY291bnQKKiBHaXQgaW5zdGFsbGVkIGxvY2FsbHkKKiBHaXRodWIuY29tIGFjY291bnQKKiBXZWVibHkgRnJlZSBEZXZlbG9wZXIgQWNjb3VudAoKIyBVc2FnZQoKKiBbSGVyb2t1IE9uZS1CdXR0b24gUXVpY2tzdGFydF0oI2hlcm9rdS1vbmUtYnV0dG9uLXF1aWNrc3RhcnQpCiogW1J1bm5pbmcgd2l0aCBIZXJva3UgQ29udGFpbmVyIFJlZ2lzdHJ5XSgjcnVubmluZy13aXRoLWhlcm9rdS1jb250YWluZXItcmVnaXN0cnkpCiogW0hlcm9rdSBMb2NhbCBhbmQgbmdyb2tdKCNydW5uaW5nLWxvY2FsbHktd2l0aC1oZXJva3UtbG9jYWwtYW5kLW5ncm9rKQoKIyMgSGVyb2t1IE9uZS1CdXR0b24gUXVpY2tzdGFydAoKTWFrZSBzdXJlIHlvdSBoYXZlIHRoZSBmb2xsb3dpbmcgZGF0YSBhdmFpbGFibGU6CgoqIFdlZWJseSBBcHAgTmFtZQoqIFdlZWJseSBBcHAgLSBDbGllbnQgSUQKKiBXZWVibHkgQXBwIC0gU2VjcmV0Cgo+IE5PVEU6IFlvdSBvYnRhaW4gV2VlYmx5IEFQSSBLZXlzIGZvciB5b3VyIGFwcCBmcm9tIHRoZSBbV2VlYmx5IERldmVsb3BlciBBZG1pbiBQb3J0YWxdKGh0dHBzOi8vd3d3LndlZWJseS5jb20vZGV2ZWxvcGVyLWFkbWluLykKCjEuIENsaWNrIG9uIHRoZSAiRGVwbG95IHRvIEhlcm9rdSIgYnV0dG9uIGJlbG93LCBhbmQgdGhlbiB1cGRhdGUgdGhlIGNvbmZpZyB2YXJzIHdpdGggdGhlIHJlc3BlY3RpdmUgdmFsdWVzLgoKWyFbRGVwbG95XShodHRwczovL3d3dy5oZXJva3VjZG4uY29tL2RlcGxveS9idXR0b24uc3ZnKV0oaHR0cHM6Ly9oZXJva3UuY29tL2RlcGxveSkKCjIuIFJlbmFtZSBgZW52LnRtcGxgIGZpbGUgdG8gYC5lbnZgIGFuZCBlZGl0IHRoZSBmaWxlIHRvIGFkZCB0aGUgV2VlYmx5IEFQSSBLZXlzLCByZXBsYWNlIHRoZSBPQXV0aCBDYWxsYmFjayBVUkwsIGFuZCBXZWJob29rIENhbGxiYWNrIFVSTC4KCkluIHRoZSBgLmVudmAgZmlsZSwgcmVwbGFjZSAqKldFRUJMWV9DTElFTlRfSUQqKiBhbmQgKipXRUVCTFlfQVBQX1NFQ1JFVCoqIHZhbHVlcyByZXNwZWN0aXZlbHkgKHJlbW92aW5nIHRoZSB0ZW1wbGF0ZSBzdHJpbmcgdGFncyBge3tgIGB9fWAgZnJvbSB0aGUgdmFsdWVzLgoKRm9yIGV4YW1wbGUsIGlmIHlvdXIgY2xpZW50IGlkIGlzICoqMTIzNDU2Nzg5KiosIHlvdSB3b3VsZCBjaGFuZ2UgdGhpcyBsaW5lOgoKYCJjbGllbnRfaWQiOiAie3tZT1VSX0NMSUVOVF9JRH19IixgIHRvIGxvb2sgbGlrZSB0aGlzOiBgImNsaWVudF9pZCI6ICIxMjM0NTY3ODkiLGAKClNhdmUgeW91ciBjaGFuZ2VzLCBhbmQgY2xvc2UgdGhlIGAuZW52YCBmaWxlLgoKMy4gVXBkYXRlIGBtYW5pZmVzdC5qc29uYCBmaWxlLgoKVXNlIHRoZSBzZWN1cmVkIFVSTCB5b3UgcmVjZWl2ZSBmb3IgeW91ciBuZXcgSGVyb2t1IGFwcCAob25jZSB5b3UgaGF2ZSBmaW5pc2hlZCBpbnN0YWxsaW5nIGFuZCBkZXBsb3lpbmcgaXQpLCBhbmQgcmVwbGFjZSB0aGUgYmFzZSBVUkwgKipjYWxsYmFja191cmwqKiBhbmQgKip3ZWJob29rX2NhbGxiYWNrX3VybCoqIChsZWF2ZSB0aGUgcGF0aHMgaW4gdGFjdCkKCkZvciBleGFtcGxlLCBpZiB5b3VyIGhlcm9rdSBhcHAgVVJMIGlzOiAqKmh0dHBzOi8vY3VzdG9tLWplbGxvLTEyMy5oZXJva3VhcHAuY29tKiosIHlvdSB3b3VsZCBjaGFuZ2UgdGhpcyBsaW5lOgoKYCJjYWxsYmFja191cmwiOiAie3tZT1VSX1NFQ1VSRV9BUFBfUk9PVF9VUkx9fS9vYXV0aC9waGFzZS1vbmUiLGAgdG8gbG9vayBsaWtlIHRoaXM6IGAiY2FsbGJhY2tfdXJsIjogImh0dHBzOi8vY3VzdG9tLWplbGxvLTEyMy5oZXJva3VhcHAuY29tL29hdXRoL3BoYXNlLW9uZSIsIAoKT25jZSB5b3UgaGF2ZSB1cGRhdGVkIGJvdGggdGhlIGBjYWxsYmFja191cmxgIGFuZCB0aGUgYHdlYmhvb2tfY2FsbGJhY2tfdXJsYCB2YWx1ZXMsIHNhdmUgYW5kIGV4aXQgdGhlIGBtYW5pZmVzdC5qc29uYCBmaWxlLgoKNC4gQ3JlYXRlIGEgWklQIGFyY2hpdmUgb2YgdGhlOiBgbWFuaWZlc3QuanNvbmAsIGBpY29uLnN2Z2AgZmlsZXMuCgo1LiBMb2dpbiB0byBbV2VlYmx5IERldmVsb3BlciBBZG1pbiBQb3J0YWxdKGh0dHBzOi8vd3d3LndlZWJseS5jb20vZGV2ZWxvcGVyLWFkbWluLykgYW5kIHVwbG9hZCBhIG5ldyB2ZXJzaW9uIG9mIHlvdXIgYXBwIChzZWxlY3RpbmcgdGhlIFpJUCBmaWxlIHlvdSBqdXN0IGNyZWF0ZWQpCgo2LiBJbnN0YWxsIHRoZSBuZXcgZHJhZnQgdmVyc2lvbiBvZiB5b3VyIGFwcCBpbnRvIHlvdXIgV2VlYmx5IERldmVsb3BlciBUZXN0IFNpdGUsIGFuZCB2aWV3IHRoZSBsb2dzIGluIGhlcm9rdQoKYGhlcm9rdSBsb2dzIC0tdGFpbGAKCjcuIFlvdSBjYW4gZ2VuZXJhdGUgd2ViaG9vayBldmVudHMgYnkgbG9nZ2luZyBpbnRvIGFuZCBvdXQgb2YgeW91ciBbV2VlYmx5IERldmVsb3BlciBTaXRlXShodHRwczovL3dlZWJseS5jb20pIGFjY291bnQuCgo4LiBPcGVuIHlvdXIgaGVyb2t1IGFwcCBhbmQgaWYgeW91IHNlZSAiSXQgd29ya3MhIiB0aGUgYXBwIGlzIHJ1bm5pbmcuCgpGcm9tIGhlcmUsIHlvdSB3b3VsZCB3YW50IHRvIHVwZGF0ZSB0aGUgYGFwcC93ZWJob29rcy1yb3V0ZXIuanNgIGZpbGUgd2l0aCBsb2dpYyB0byBkbyBtb3JlIHRoYW4ganVzdCBsb2cgdGhlIGV2ZW50cyB0byB0aGUgY29uc29sZS4KCklmIHlvdSB1c2UgdGhlIFF1aWNrc3RhcnQgdG8gcnVuIHRoaXMgYXBwLCB0aGUgZm9sbG93aW5nIGRpcmVjdGlvbnMgZm9yIHVzZSB3aXRoIEhlcm9rdSBMb2NhbCBhbmQgSGVyb2t1IENvbnRhaW5lciBSZWdpc3RyeSBtYXkgbm90IG9wZXJhdGUgYXMgZXhwZWN0ZWQuCgoKIyMgUnVubmluZyB3aXRoIEhlcm9rdSBDb250YWluZXIgUmVnaXN0cnkKCiogW0hlcm9rdSBDb250YWluZXIgUmVnaXN0cnkgZG9jc10oaHR0cHM6Ly9kZXZjZW50ZXIuaGVyb2t1LmNvbS9hcnRpY2xlcy9jb250YWluZXItcmVnaXN0cnktYW5kLXJ1bnRpbWUpCgoxLiBDbG9uZSB0aGUgY29kZSBiYXNlIHRvIHlvdXIgbG9jYWwgbWFjaGluZQoKYGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vd2VlYmx5L25vZGUtd2ViaG9vay1jbGllbnRgCgoyLiBDaGFuZ2UgeW91ciBwcmVzZW50IHdvcmtpbmcgZGlyZWN0b3J5IChQV0QpIGludG8gdGhlIG5ld2x5IGNsb25lZCByZXBvc2l0b3J5IGRpcmVjdG9yeQoKYGNkIG5vZGUtd2ViaG9vay1jbGllbnQvYAoKMy4gTG9naW4gdG8gSGVyb2t1IGFuZCBIZXJva3UgQ29udGFpbmVyLCB0byBvYnRhaW4gdGhlIFVSTCBmb3IgeW91ciByZW1vdGUgSGVyb2t1IGFwcAoKYGhlcm9rdSBsb2dpbmAKCmBoZXJva3UgY29udGFpbmVyOmxvZ2luYAoKYGhlcm9rdSBjcmVhdGVgIChjb3B5IHRoZSBzZWN1cmVkIFVSTCBiZWdpbm5pbmcgd2l0aCAqKmh0dHBzOi8vKiogeW91IHdpbGwgbmVlZCB0aGF0IHRvIHVwZGF0ZSB0aGUgYG1hbmlmZXN0Lmpzb25gIGxhdGVyKSAKCjQuIFJlbmFtZSBgZW52LnRtcGxgIGZpbGUgdG8gYC5lbnZgIGFuZCBlZGl0IHRoZSBmaWxlIHRvIGFkZCB0aGUgV2VlYmx5IEFQSSBLZXlzLCByZXBsYWNlIHRoZSBPQXV0aCBDYWxsYmFjayBVUkwsIGFuZCBXZWJob29rIENhbGxiYWNrIFVSTC4KCllvdSBvYnRhaW4gV2VlYmx5IEFQSSBLZXlzIGZvciB5b3VyIGFwcCBmcm9tIHRoZSBbV2VlYmx5IERldmVsb3BlciBBZG1pbiBQb3J0YWxdKGh0dHBzOi8vd3d3LndlZWJseS5jb20vZGV2ZWxvcGVyLWFkbWluLykuIEluIHRoZSBgLmVudmAgZmlsZSwgcmVwbGFjZSB0aGUgdmFsdWUgZm9yICoqV0VFQkxZX0NMSUVOVF9JRCoqIHdpdGggeW91ciBhcHAncyBDbGllbnQgSUQgKG1ha2luZyBzdXJlIHRvIHJlbW92ZSB0ZW1wbGF0ZSBzdHJpbmcgdGFncyBge3tgIGB9fWBgIGZyb20gdGhlIHZhbHVlcy4KCkZvciBleGFtcGxlLCBpZiB5b3VyIGNsaWVudCBpZCBpcyAqKjEyMzQ1Njc4OSoqLCB5b3Ugd291bGQgY2hhbmdlIHRoaXMgbGluZToKCmAiY2xpZW50X2lkIjogInt7WU9VUl9DTElFTlRfSUR9fSIsYCB0byBsb29rIGxpa2UgdGhpczogYCJjbGllbnRfaWQiOiAiMTIzNDU2Nzg5IixgCgpVcGRhdGUgWW91ciBTZWN1cmVkIEFwcCBSb290IFVSTCB5b3Ugb2J0YWluZWQgZnJvbSB0aGUgYGhlcm9rdSBjcmVhdGVgIGNvbW1hbmQgYW5kIHJlcGxhY2UgdGhlIHRoZSByb290IFVSTCByZXNwZWN0aXZlbHkgZm9yOiAqKm9hdXRoX2NhbGxiYWNrX3VybCoqIGFuZCAqKndlYmhvb2tfY2FsbGJhY2tfdXJsKiogKGxlYXZlIHRoZSBwYXRocyBpbiB0YWN0KQoKNS4gU2V0IHlvdXIgV2VlYmx5IEFQSSBLZXlzIGFzIGVudmlyb25tZW50IHZhcmlhYmxlcyBvbiB0aGUgSGVyb2t1IGFwcAoKYGhlcm9rdSBjb25maWc6c2V0IFdFRUJMWV9DTElFTlRfSUQ9W3lvdXJfYXBwX2NsaWVudF9pZF1gCmBoZXJva3UgY29uZmlnOnNldCBXRUVCTFlfU0VDUkVUX0tFWT1beW91cl9hcHBfc2VjcmV0X2tleV1gCgo2LiBCdWlsZCB0aGUgaW1hZ2UgYW5kIHB1c2ggdG8gQ29udGFpbmVyIFJlZ2lzdHJ5CgpgaGVyb2t1IGNvbnRhaW5lcjpwdXNoIHdlYmAKCjcuIFJlbGVhc2UgdGhlIGltYWdlIHRvIHlvdXIgYXBwCgpgaGVyb2t1IGNvbnRhaW5lcjogcmVsZWFzZSB3ZWJgCgo4LiBPcGVuIHRoZSBhcHAgaW4geW91ciBicm93c2VyCgpgaGVyb2t1IG9wZW5gCgo5LiBVcGRhdGUgYG1hbmlmZXN0Lmpzb25gIGZpbGUuCgpVc2UgdGhlIHNlY3VyZWQgVVJMIHlvdSByZWNlaXZlIGZvciB5b3VyIG5ldyBIZXJva3UgYXBwIChvbmNlIHlvdSBoYXZlIGZpbmlzaGVkIGluc3RhbGxpbmcgYW5kIGRlcGxveWluZyBpdCksIGFuZCByZXBsYWNlIHRoZSBiYXNlIFVSTCAqKmNhbGxiYWNrX3VybCoqIGFuZCAqKndlYmhvb2tfY2FsbGJhY2tfdXJsKiogKGxlYXZlIHRoZSBwYXRocyBpbiB0YWN0KQoKRm9yIGV4YW1wbGUsIGlmIHlvdXIgaGVyb2t1IGFwcCBVUkwgaXM6ICoqaHR0cHM6Ly9jdXN0b20tamVsbG8tMTIzLmhlcm9rdWFwcC5jb20qKiwgeW91IHdvdWxkIGNoYW5nZSB0aGlzIGxpbmU6CgpgImNhbGxiYWNrX3VybCI6ICJ7e1lPVVJfU0VDVVJFX0FQUF9ST09UX1VSTH19L29hdXRoL3BoYXNlLW9uZSIsYCB0byBsb29rIGxpa2UgdGhpczogYCJjYWxsYmFja191cmwiOiAiaHR0cHM6Ly9jdXN0b20tamVsbG8tMTIzLmhlcm9rdWFwcC5jb20vb2F1dGgvcGhhc2Utb25lIiwgCgpPbmNlIHlvdSBoYXZlIHVwZGF0ZWQgYm90aCB0aGUgYGNhbGxiYWNrX3VybGAgYW5kIHRoZSBgd2ViaG9va19jYWxsYmFja191cmxgIHZhbHVlcywgc2F2ZSBhbmQgZXhpdCB0aGUgYG1hbmlmZXN0Lmpzb25gIGZpbGUuCgoxMC4gQ3JlYXRlIGEgWklQIGFyY2hpdmUgb2YgdGhlOiBgbWFuaWZlc3QuanNvbmAsIGBpY29uLnN2Z2AgZmlsZXMuCgoxMS4gTG9naW4gdG8gW1dlZWJseSBEZXZlbG9wZXIgQWRtaW4gUG9ydGFsXShodHRwczovL3d3dy53ZWVibHkuY29tL2RldmVsb3Blci1hZG1pbi8pIGFuZCB1cGxvYWQgYSBuZXcgdmVyc2lvbiBvZiB5b3VyIGFwcCAoc2VsZWN0aW5nIHRoZSBaSVAgZmlsZSB5b3UganVzdCBjcmVhdGVkKQoKMTIuIEluc3RhbGwgdGhlIG5ldyBkcmFmdCB2ZXJzaW9uIG9mIHlvdXIgYXBwIGludG8geW91ciBXZWVibHkgRGV2ZWxvcGVyIFRlc3QgU2l0ZSwgYW5kIHZpZXcgdGhlIGxvZ3MgaW4geW91ciBjb25zb2xlCgoxMy4gWW91IGNhbiBnZW5lcmF0ZSB3ZWJob29rIGV2ZW50cyBieSBsb2dnaW5nIGludG8gYW5kIG91dCBvZiB5b3VyIFtXZWVibHkgRGV2ZWxvcGVyIFNpdGVdKGh0dHBzOi8vd2VlYmx5LmNvbSkgYWNjb3VudC4KCjE0LiBPcGVuIHlvdXIgaGVyb2t1IGFwcCBhbmQgaWYgeW91IHNlZSAiSXQgd29ya3MhIiB0aGUgYXBwIGlzIHJ1bm5pbmcuCgpGcm9tIGhlcmUsIHlvdSB3b3VsZCB3YW50IHRvIHVwZGF0ZSB0aGUgYGFwcC93ZWJob29rcy1yb3V0ZXIuanNgIGZpbGUgd2l0aCBsb2dpYyB0byBkbyBtb3JlIHRoYW4ganVzdCBsb2cgdGhlIGV2ZW50cyB0byB0aGUgY29uc29sZS4KCgoKIyMgUnVubmluZyBsb2NhbGx5IHdpdGggSGVyb2t1IExvY2FsIGFuZCBuZ3JvawoKTWFrZSBzdXJlIHlvdSBoYXZlIGFuIFtuZ3Jva10oaHR0cHM6Ly9uZ3Jvay5jb20pIGFjY291bnQgYW5kIHRoYXQgaXQgaXMgaW5zdGFsbGVkIG9uIHlvdXIgbG9jYWwgd29ya3N0YXRpb24uCgoqIFtIZXJva3UgTG9jYWwgZG9jc10oaHR0cHM6Ly9kZXZjZW50ZXIuaGVyb2t1LmNvbS9hcnRpY2xlcy9oZXJva3UtbG9jYWwpCiogW25ncm9rIGRvY3NdKGh0dHBzOi8vbmdyb2suY29tL2RvY3MpCgoxLiBDbG9uZSB0aGUgY29kZSBiYXNlIHRvIHlvdXIgbG9jYWwgbWFjaGluZQoKYGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vd2VlYmx5L25vZGUtd2ViaG9vay1jbGllbnRgCgoyLiBDaGFuZ2UgeW91ciBwcmVzZW50IHdvcmtpbmcgZGlyZWN0b3J5IChQV0QpIGludG8gdGhlIG5ld2x5IGNsb25lZCByZXBvc2l0b3J5IGRpcmVjdG9yeQoKYGNkIG5vZGUtd2ViaG9vay1jbGllbnQvYAoKNC4gUmVuYW1lIGBlbnYudG1wbGAgZmlsZSB0byBgLmVudmAgYW5kIGVkaXQgdGhlIGZpbGUgdG8gYWRkIHRoZSBXZWVibHkgQVBJIEtleXMsIHJlcGxhY2UgdGhlIE9BdXRoIENhbGxiYWNrIFVSTCwgYW5kIFdlYmhvb2sgQ2FsbGJhY2sgVVJMLgoKWW91IG9idGFpbiBXZWVibHkgQVBJIEtleXMgZm9yIHlvdXIgYXBwIGZyb20gdGhlIFtXZWVibHkgRGV2ZWxvcGVyIEFkbWluIFBvcnRhbF0oaHR0cHM6Ly93d3cud2VlYmx5LmNvbS9kZXZlbG9wZXItYWRtaW4vKS4gSW4gdGhlIGAuZW52YCBmaWxlLCByZXBsYWNlIHRoZSB2YWx1ZSBmb3IgKipXRUVCTFlfQ0xJRU5UX0lEKiogd2l0aCB5b3VyIGFwcCdzIENsaWVudCBJRCAobWFraW5nIHN1cmUgdG8gcmVtb3ZlIHRlbXBsYXRlIHN0cmluZyB0YWdzIGB7e2AgYH19YGAgZnJvbSB0aGUgdmFsdWVzLgoKRm9yIGV4YW1wbGUsIGlmIHlvdXIgY2xpZW50IGlkIGlzICoqMTIzNDU2Nzg5KiosIHlvdSB3b3VsZCBjaGFuZ2UgdGhpcyBsaW5lOgoKYCJjbGllbnRfaWQiOiAie3tZT1VSX0NMSUVOVF9JRH19IixgIHRvIGxvb2sgbGlrZSB0aGlzOiBgImNsaWVudF9pZCI6ICIxMjM0NTY3ODkiLGAKClVwZGF0ZSBZb3VyIFNlY3VyZWQgQXBwIFJvb3QgVVJMIHlvdSBvYnRhaW5lZCBmcm9tICoqbmdyb2sqKiBhbmQgcmVwbGFjZSB0aGUgdGhlIHJvb3QgVVJMIHJlc3BlY3RpdmVseSBmb3I6ICoqb2F1dGhfY2FsbGJhY2tfdXJsKiogYW5kICoqd2ViaG9va19jYWxsYmFja191cmwqKiAobGVhdmUgdGhlIHBhdGhzIGluIHRhY3QpCgo1LiBVcGRhdGUgYG1hbmlmZXN0Lmpzb25gIGZpbGUuCgpVc2UgdGhlIHNlY3VyZWQgVVJMIHlvdSByZWNlaXZlIGZvciB5b3VyIG5ldyBIZXJva3UgYXBwIChvbmNlIHlvdSBoYXZlIGZpbmlzaGVkIGluc3RhbGxpbmcgYW5kIGRlcGxveWluZyBpdCksIGFuZCByZXBsYWNlIHRoZSBiYXNlIFVSTCAqKmNhbGxiYWNrX3VybCoqIGFuZCAqKndlYmhvb2tfY2FsbGJhY2tfdXJsKiogKGxlYXZlIHRoZSBwYXRocyBpbiB0YWN0KQoKRm9yIGV4YW1wbGUsIGlmIHlvdXIgaGVyb2t1IGFwcCBVUkwgaXM6ICoqaHR0cHM6Ly9jdXN0b20tamVsbG8tMTIzLmhlcm9rdWFwcC5jb20qKiwgeW91IHdvdWxkIGNoYW5nZSB0aGlzIGxpbmU6CgpgImNhbGxiYWNrX3VybCI6ICJ7e1lPVVJfU0VDVVJFX0FQUF9ST09UX1VSTH19L29hdXRoL3BoYXNlLW9uZSIsYCB0byBsb29rIGxpa2UgdGhpczogYCJjYWxsYmFja191cmwiOiAiaHR0cHM6Ly9jdXN0b20tamVsbG8tMTIzLmhlcm9rdWFwcC5jb20vb2F1dGgvcGhhc2Utb25lIiwgCgpPbmNlIHlvdSBoYXZlIHVwZGF0ZWQgYm90aCB0aGUgYGNhbGxiYWNrX3VybGAgYW5kIHRoZSBgd2ViaG9va19jYWxsYmFja191cmxgIHZhbHVlcywgc2F2ZSBhbmQgZXhpdCB0aGUgYG1hbmlmZXN0Lmpzb25gIGZpbGUuCgo2LiBDcmVhdGUgYSBaSVAgYXJjaGl2ZSBvZiB0aGU6IGBtYW5pZmVzdC5qc29uYCwgYGljb24uc3ZnYCBmaWxlcy4KCjcuIExvZ2luIHRvIFtXZWVibHkgRGV2ZWxvcGVyIEFkbWluIFBvcnRhbF0oaHR0cHM6Ly93d3cud2VlYmx5LmNvbS9kZXZlbG9wZXItYWRtaW4vKSBhbmQgdXBsb2FkIGEgbmV3IHZlcnNpb24gb2YgeW91ciBhcHAgKHNlbGVjdGluZyB0aGUgWklQIGZpbGUgeW91IGp1c3QgY3JlYXRlZCkKCjguIFN0YXJ0ICoqbmdyb2sqKiBmb3IgeW91ciBhcHAKCjkuIFN0YXJ0IHlvdXIgYXBwOiBgaGVyb2t1IGxvY2FsYCAoZGVwZW5kaW5nIHVwb24gaG93IHlvdSBjb25maWd1cmUgbmdyb2ssIHlvdSBtYXkgbmVlZCB0byBjaGFuZ2UgdGhlIHBvcnQgdXNlZCBieSB0aGUgYXBwKQoKMTAuIEluc3RhbGwgdGhlIG5ldyBkcmFmdCB2ZXJzaW9uIG9mIHlvdXIgYXBwIGludG8geW91ciBXZWVibHkgRGV2ZWxvcGVyIFRlc3QgU2l0ZSwgYW5kIHZpZXcgdGhlIGxvZ3MgaW4geW91ciBjb25zb2xlCgoxMS4gWW91IGNhbiBnZW5lcmF0ZSB3ZWJob29rIGV2ZW50cyBieSBsb2dnaW5nIGludG8gYW5kIG91dCBvZiB5b3VyIFtXZWVibHkgRGV2ZWxvcGVyIFNpdGVdKGh0dHBzOi8vd2VlYmx5LmNvbSkgYWNjb3VudC4KCjEyLiBPcGVuIHlvdXIgaGVyb2t1IGFwcCBhbmQgaWYgeW91IHNlZSAiSXQgd29ya3MhIiB0aGUgYXBwIGlzIHJ1bm5pbmcuCgpGcm9tIGhlcmUsIHlvdSB3b3VsZCB3YW50IHRvIHVwZGF0ZSB0aGUgYGFwcC93ZWJob29rcy1yb3V0ZXIuanNgIGZpbGUgd2l0aCBsb2dpYyB0byBkbyBtb3JlIHRoYW4ganVzdCBsb2cgdGhlIGV2ZW50cyB0byB0aGUgY29uc29sZS4K</textarea>
+<textarea class="saurus-file" data-file="server.js" data-mode="javascript">InVzZSBzdHJpY3QiOwoKY29uc3QgZXhwcmVzcyA9IHJlcXVpcmUoJ2V4cHJlc3MnKTsKY29uc3QgYm9keVBhcnNlciA9IHJlcXVpcmUoJ2JvZHktcGFyc2VyJyk7CmNvbnN0IHBhdGggPSByZXF1aXJlKCdwYXRoJyk7Cgpjb25zdCBXZWVibHlNaWRkbGV3YXJlID0gcmVxdWlyZSgnLi9taWRkbGV3YXJlL3dlZWJseS5qcycpOwpjb25zdCBvYXV0aFJvdXRlciA9IHJlcXVpcmUoJy4vYXBwL29hdXRoLXJvdXRlci5qcycpOwpjb25zdCB3ZWJob29rc1JvdXRlciA9IHJlcXVpcmUoJy4vYXBwL3dlYmhvb2tzLXJvdXRlci5qcycpOwoKY29uc3QgZ2V0RGF0ZSA9IHJlcXVpcmUoJy4vb3V0cHV0RGF0ZS5qcycpOwoKLyoqCiAqIENyZWF0ZSB0aGUgZXhwcmVzcyBhcHAKICovCmNvbnN0IGFwcCA9IGV4cHJlc3MoKTsKYXBwLnVzZShib2R5UGFyc2VyLmpzb24oKSk7CmFwcC51c2UoYm9keVBhcnNlci51cmxlbmNvZGVkKHsKCWV4dGVuZGVkOiB0cnVlCn0pKTsKCi8qKgogKiBTZXQgYW5kIGNyZWF0ZSBhIG5ldyBpbnN0YW5jZSBvZiBXZWVibHlNaWRkbGV3YXJlLgogKiBUaGUgYGNsaWVudF9pZGAgYW5kIGBzZWNyZXRfa2V5YCBjYW4gYmUgc2V0IGVpdGhlciBoZXJlCiAqIG9yIGluIHlvdXIgZW52aXJvbm1lbnQgdmFyaWFibGVzIChlLmcuIGZvciBIZXJva3UpCiAqCiAqIE5PVEU6IElmIHlvdSBoYXZlIFdFRUJMWV9DTElFTlRfSUQgYW5kIFdFRUJMWV9TRUNSRVRfS0VZCiAqIHNldCBpbiB5b3VyIGVudmlyb25tZW50LCB5b3UgY2FuIGNyZWF0ZSB0aGUgbmV3IFdlZWJseU1pZGRsZXdhcmUKICogaW5zdGFuY2Ugd2l0aCBgY29uc3Qgd01pZGRsZXdhcmUgPSBuZXcgV2VlYmx5TWlkZGxld2FyZSgpYAogKgogKiBAdHlwZSB7V2VlYmx5TWlkZGxld2FyZXxleHBvcnRzfG1vZHVsZS5leHBvcnRzfQogKi8KY29uc3Qgd01pZGRsZXdhcmUgPSBuZXcgV2VlYmx5TWlkZGxld2FyZSh7CgknY2xpZW50X2lkJzogJycsCgknc2VjcmV0X2tleSc6ICcnCn0pOwoKLyoqCiAqIFJlcXVpcmVzIFdlZWJseSBEZXYgc2VjcmV0cyB0byBiZSBzZXQgdG8gYWNjZXNzCiAqLwphcHAudXNlKCcvb2F1dGgnLCB3TWlkZGxld2FyZSwgb2F1dGhSb3V0ZXIpOwphcHAudXNlKCcvd2ViaG9va3MnLCB3TWlkZGxld2FyZSwgd2ViaG9va3NSb3V0ZXIpOwoKLyoqCiAqIERvZXMgbm90IHJlcXVpcmUgd2VlYmx5IHRva2VucyB0byBhY2Nlc3MKICovCmFwcC5nZXQoJy8nLCBmdW5jdGlvbihyZXEsIHJlcykgewoJLy9jb25zb2xlLmxvZyhgRGF0ZTogJHtnZXREYXRlKCl9YCk7CgkvL2NvbnNvbGUubG9nKGBSZWNlaXZlZCByZXF1ZXN0IGF0IHdlYnJvb3Qgb2YgYXBwYCk7CglyZXMuc2VuZEZpbGUocGF0aC5yZXNvbHZlKGAke19fZGlybmFtZX0vbWVzc2FnZXMvbWVzc2FnZXMudHh0YCkpOwp9KTsKCi8qKgogKiBMaXN0ZW4gb24gZW52aXJvbm1lbnQgcG9ydCBvciAzMDAwCiAqLwphcHAubGlzdGVuKHByb2Nlc3MuZW52LlBPUlQgfHwgMzAwMCk7Cgpjb25zb2xlLmxvZyhgXG5MaXN0ZW5pbmcgb24gaHR0cDovL2xvY2FsaG9zdDoke3Byb2Nlc3MuZW52LlBPUlQgfHwgMzAwMH1cbmApOwo=</textarea>
+<textarea class="saurus-file" data-file="middleware/weebly.js" data-mode="javascript">InVzZSBzdHJpY3QiOwoKY29uc3QgZXhwcmVzcyA9IHJlcXVpcmUoJ2V4cHJlc3MnKTsKCi8qKgogKiBTaW1wbGUgbWlkZGxld2FyZSB3aGljaCByZXF1aXJlcyBXRUVCTFlfQ0xJRU5UX0lECiAqIGFuZCBXRUVCTFlfU0VDUkVUX0tFWSB0byBiZSBzZXQgYmVmb3JlIGNvbnRpbnVpbmcKICoKICogQHBhcmFtIG9wdGlvbnMKICogQHJldHVybnMge0Z1bmN0aW9ufQogKiBAY29uc3RydWN0b3IKICovCmxldCBXZWVibHlNaWRkbGV3YXJlID0gZnVuY3Rpb24ob3B0aW9ucykgewoJbGV0IGNsaWVudElkID0gcHJvY2Vzcy5lbnYuV0VFQkxZX0NMSUVOVF9JRCB8fCBvcHRpb25zLmNsaWVudF9pZDsKCWxldCBzZWNyZXRLZXkgPSBwcm9jZXNzLmVudi5XRUVCTFlfU0VDUkVUX0tFWSB8fCBvcHRpb25zLnNlY3JldF9rZXk7CgoJcmV0dXJuIGZ1bmN0aW9uKHJlcSwgcmVzLCBuZXh0KSB7CgkJaWYgKCFjbGllbnRJZCkgewoJCQl0aHJvdyAiQ2xpZW50IElEIG11c3QgYmUgZGVmaW5lZCI7CgkJfQoKCQlpZiAoIXNlY3JldEtleSkgewoJCQl0aHJvdyAiU2VjcmV0IEtleSBtdXN0IGJlIGRlZmluZWQiOwoJCX0KCgkJcmVxLmFwcC5jbGllbnRJZCA9IGNsaWVudElkOwoJCXJlcS5hcHAuc2VjcmV0S2V5ID0gc2VjcmV0S2V5OwoKCQluZXh0KCk7Cgl9Owp9OwoKbW9kdWxlLmV4cG9ydHMgPSBXZWVibHlNaWRkbGV3YXJlOwo=</textarea>
+<textarea class="saurus-file" data-file="app/oauth-router.js" data-mode="javascript">InVzZSBzdHJpY3QiOwoKY29uc3Qgcm91dGVyID0gcmVxdWlyZSgnZXhwcmVzcycpLlJvdXRlcigpOwpjb25zdCBmcyA9IHJlcXVpcmUoJ2ZzJyk7CmNvbnN0IHBhdGggPSByZXF1aXJlKCdwYXRoJyk7CmNvbnN0IG5lZWRsZSA9IHJlcXVpcmUoJ25lZWRsZScpOwpjb25zdCBxdWVyeXN0cmluZyA9IHJlcXVpcmUoJ3F1ZXJ5c3RyaW5nJyk7CmNvbnN0IFV0aWxpdHkgPSByZXF1aXJlKCcuL3V0aWxpdHknKTsKCi8qKgogKiBJbml0aWFsIE9BdXRoIGVuZHBvaW50IGFzIHNwZWNpZmllZCBpbiBgbWFuaWZlc3QuanNvbmAuCiAqLwpyb3V0ZXIuZ2V0KCcvcGhhc2Utb25lJywgZnVuY3Rpb24ocmVxLCByZXMpIHsKCWNvbnN0IGNsaWVudElkID0gcmVxLmFwcC5jbGllbnRJZDsKCWNvbnN0IHNlY3JldEtleSA9IHJlcS5hcHAuc2VjcmV0S2V5OwoKICAgIC8vIGZpcnN0LCBsZXQncyB2ZXJpZnkgdGhhdCBvdXIgaG1hYyBpcyBjb25zaXN0ZW50IHdpdGggd2hhdCB3YXMgc2VudC4KICAgIGxldCBjb21wYXJlT2JqID0gewoJCSd1c2VyX2lkJzogcmVxLnF1ZXJ5LnVzZXJfaWQsCgkJJ3RpbWVzdGFtcCc6IHJlcS5xdWVyeS50aW1lc3RhbXAsCgkJJ3NpdGVfaWQnOiByZXEucXVlcnkuc2l0ZV9pZAoJfTsKCWxldCBjb21wYXJlU3RyaW5nID0gcXVlcnlzdHJpbmcuc3RyaW5naWZ5KGNvbXBhcmVPYmopOwoKCWlmICghVXRpbGl0eS52YWxpZGF0ZUhtYWMocmVxLnF1ZXJ5LmhtYWMsIGNvbXBhcmVTdHJpbmcsIHNlY3JldEtleSkpIHsKCQlsZXQgbWVzc2FnZXMgPSBbXTsKCQltZXNzYWdlcy5wdXNoKCJUaGUgT0F1dGggZmxvdyB3YXMgc3RhcnRlZCwgYnV0IHRoZSBobWFjIGNhbGN1bGF0ZWQgZGlkbid0IG1hdGNoIHRoZSBobWFjIHBhc3NlZC4iKTsKCQltZXNzYWdlcy5wdXNoKGBFeHBlY3RlZDogJHtyZXEucXVlcnkuaG1hY31gKTsKCQltZXNzYWdlcy5wdXNoKGBDb21wdXRlZDogJHtVdGlsaXR5LmdlbmVyYXRlSG1hYyhjb21wYXJlU3RyaW5nLCBzZWNyZXRLZXkpfWApOwoJCWxldCBtZXNzYWdlID0gIlxuIiArIG1lc3NhZ2VzLmpvaW4oIlxuIikgKyAiXG4iOwoJCXJldHVybiByZXMuc3RhdHVzKDUwMCkuc2VuZChtZXNzYWdlKTsKCX0KCiAgICBmcy5hcHBlbmRGaWxlKAogICAgICAgIHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUgKyAnLy4uL21lc3NhZ2VzL21lc3NhZ2VzLnR4dCcpLAogICAgICAgIGBcbkEgbmV3IGluc3RhbGxhdGlvbiBmb3IgdXNlciBpZCAke3JlcS5xdWVyeS51c2VyX2lkfSwgc2l0ZSBpZCAke3JlcS5xdWVyeS5zaXRlX2lkfSBoYXMgYmVlbiBpbml0YWxpemVkLlxuYCwKICAgICAgICBmdW5jdGlvbihlcnJvcikgewogICAgICAgICAgICBjb25zb2xlLmVycm9yKGVycm9yKTsKICAgICAgICB9CiAgICApOwoKICAgIC8vIGlmIHdlJ3ZlIHJlYWNoZWQgdGhpcyBwb2ludCwgdGhhdCBtZWFucyB3ZSdyZSBzZXQuCiAgICAvLyBtYWtlIGEgcmVxdWVzdCB0byBzdGFydCB0aGUgYXV0aG9yaXphdGlvbiBwcm9jZXNzCglsZXQgcGhhc2VUd29MaW5rID0gYGh0dHBzOi8vJHtyZXEuaGVhZGVycy5ob3N0fS9vYXV0aC9waGFzZS10d29gOwoJbGV0IGNhbGxiYWNrUGFyYW1zID0gewoJCSdjbGllbnRfaWQnOiBjbGllbnRJZCwKCQkndXNlcl9pZCc6IHJlcS5xdWVyeS51c2VyX2lkLAoJCSdzaXRlX2lkJzogcmVxLnF1ZXJ5LnNpdGVfaWQsCgkJJ3JlZGlyZWN0X3VyaSc6IHBoYXNlVHdvTGluawoJfTsKCWxldCBwYXJhbXNTdHJpbmcgPSBxdWVyeXN0cmluZy5zdHJpbmdpZnkoY2FsbGJhY2tQYXJhbXMpOwoJbGV0IHJlZGlyZWN0VXJsID0gYCR7cmVxLnF1ZXJ5LmNhbGxiYWNrX3VybH0/JHtwYXJhbXNTdHJpbmd9YDsKCglpZihyZXEucXVlcnkudmVyc2lvbikgewoJCXJlZGlyZWN0VXJsICs9IGAmdmVyc2lvbj0ke3JlcS5xdWVyeS52ZXJzaW9ufWA7Cgl9CgoJcmVzLnJlZGlyZWN0KHJlZGlyZWN0VXJsKTsKfSk7CgovKioKICogU2Vjb25kYXJ5IE9BdXRoIGVuZHBvaW50IGFzIHNwZWNpZmllZCBieSBgcGhhc2VUd29MaW5rYCBpbiB0aGUgcGhhc2Ugb25lIGVuZHBvaW50CiAqLwpyb3V0ZXIuZ2V0KCcvcGhhc2UtdHdvJywgZnVuY3Rpb24ocmVxLCByZXMpIHsKCWNvbnN0IGNsaWVudElkID0gcmVxLmFwcC5jbGllbnRJZDsKCWNvbnN0IHNlY3JldEtleSA9IHJlcS5hcHAuc2VjcmV0S2V5OwoKICAgIC8vIHdlIGhhdmUgb3VyIGF1dGhvcml6YXRpb24gY29kZS4KICAgIC8vIG5vdyB3ZSBtYWtlIGEgcmVxdWVzdCB0b2UgeGNoYW5nZSBpdCBmb3IgYSB0b2tlbi4KCW5lZWRsZS5wb3N0KHJlcS5xdWVyeS5jYWxsYmFja191cmwsIHsKCQljbGllbnRfaWQ6IGNsaWVudElkLAoJCWNsaWVudF9zZWNyZXQ6IHNlY3JldEtleSwKCQlhdXRob3JpemF0aW9uX2NvZGU6IHJlcS5xdWVyeS5hdXRob3JpemF0aW9uX2NvZGUKCX0sIGZ1bmN0aW9uKGVycm9yLCByZXNwb25zZSkgewoJCWlmIChlcnJvcikgcmV0dXJuIHJlcy5zdGF0dXMoNTAwKS5zZW5kKCdmYWlsZWQnKTsKCgkJbGV0IHBheWxvYWQgPSBKU09OLnBhcnNlKHJlc3BvbnNlLmJvZHkpOwoKCQkvLyB3ZSBoYXZlIHRoZSB0b2tlbi4geW91IGNhbiBzdG9yZSB0aGlzIHdoZXJldmVyCgkJY29uc29sZS5sb2cocGF5bG9hZC5hY2Nlc3NfdG9rZW4pOwoKCQlsZXQgbWVzc2FnZSA9IGBcbkFjY2VzcyB0b2tlbjogJHtwYXlsb2FkLmFjY2Vzc190b2tlbn1cbmA7CgoJCWZzLmFwcGVuZEZpbGUoCgkJCXBhdGgucmVzb2x2ZShfX2Rpcm5hbWUgKyAnLy4uL21lc3NhZ2VzL21lc3NhZ2VzLnR4dCcpLAoJCQltZXNzYWdlLAoJCQlmdW5jdGlvbihlcnJvcikgewoJCQkJY29uc29sZS5lcnJvcihlcnJvcik7CgkJCX0KCQkpOwoKCQlyZXMucmVkaXJlY3QocGF5bG9hZC5jYWxsYmFja191cmwpOwoJfSk7Cn0pOwoKLyoqCiAqIEB0eXBlIEV4cHJlc3MuUm91dGVyCiAqLwptb2R1bGUuZXhwb3J0cyA9IHJvdXRlcjsK</textarea>
+<textarea class="saurus-file" data-file="app/webhooks-router.js" data-mode="javascript">InVzZSBzdHJpY3QiOwoKY29uc3Qgcm91dGVyID0gcmVxdWlyZSgnZXhwcmVzcycpLlJvdXRlcigpOwpjb25zdCBmcyA9IHJlcXVpcmUoJ2ZzJyk7CmNvbnN0IHBhdGggPSByZXF1aXJlKCdwYXRoJyk7CmNvbnN0IFV0aWxpdHkgPSByZXF1aXJlKCcuL3V0aWxpdHknKTsKCi8qKgogKiBDYWxsYmFjayBVUkwgYXMgc3BlY2lmaWVkIGluIGBtYW5pZmVzdC5qc29uYAogKi8Kcm91dGVyLnBvc3QoJy9jYWxsYmFjaycsIGZ1bmN0aW9uKHJlcSwgcmVzKSB7CglsZXQgY29tcGFyaXNvbk9iamVjdCA9IHsKCQknY2xpZW50X2lkJzogcmVxLmJvZHkuY2xpZW50X2lkLAoJCSdjbGllbnRfdmVyc2lvbic6IHJlcS5ib2R5LmNsaWVudF92ZXJzaW9uLAoJCSdldmVudCc6IHJlcS5ib2R5LmV2ZW50LAoJCSd0aW1lc3RhbXAnOiByZXEuYm9keS50aW1lc3RhbXAsCgkJJ2RhdGEnOiByZXEuYm9keS5kYXRhCgl9OwoKCWxldCBjb21wYXJpc29uU3RyaW5nID0gSlNPTi5zdHJpbmdpZnkoY29tcGFyaXNvbk9iamVjdCk7CgoJbGV0IG1lc3NhZ2VzID0gW107CgoJbWVzc2FnZXMucHVzaCgiXG4iKTsKCiAgICAvLyB2YWxpZGF0ZSB0aGUgaG1hYyB0byBzZWUgaWYgaXRzIGNvcnJlY3QKCWlmICghVXRpbGl0eS52YWxpZGF0ZUhtYWMocmVxLmJvZHkuaG1hYywgY29tcGFyaXNvblN0cmluZywgcmVxLmFwcC5zZWNyZXRLZXkpKSB7CgkJbWVzc2FnZXMucHVzaChgQSBuZXcgd2ViaG9vayB3YXMgcmVjZWl2ZWQsIGJ1dCBpdCdzIGNhbGN1bGF0ZWQgaG1hYyBkaWRuJ3QgbWF0Y2ggd2hhdCB3YXMgcGFzc2VkLmApOwoJCW1lc3NhZ2VzLnB1c2goYEV4cGVjdGVkICR7cmVxLmJvZHkuaG1hY31gKTsKCQltZXNzYWdlcy5wdXNoKGBDYWxjdWxhdGVkICR7VXRpbGl0eS5nZW5lcmF0ZUhtYWMoY29tcGFyaXNvblN0cmluZyl9YCk7Cgl9IGVsc2UgewoJCW1lc3NhZ2VzLnB1c2goJ0EgbmV3IHdlYmhvb2sgd2FzIHJlY2lldmVkOicpOwoJfQoKCW1lc3NhZ2VzLnB1c2goYEhlYWRlcnM6ICR7SlNPTi5zdHJpbmdpZnkocmVxLmhlYWRlcnMsIG51bGwsIDIpfWApOwoJbWVzc2FnZXMucHVzaChgRGF0YTogJHtKU09OLnN0cmluZ2lmeShyZXEuYm9keSwgbnVsbCwgMil9YCk7CgoJbWVzc2FnZXMucHVzaCgiXG4iKTsKCglsZXQgbWVzc2FnZSA9IG1lc3NhZ2VzLmpvaW4oIlxuIik7CgoJY29uc29sZS5sb2cobWVzc2FnZSk7CgoJcmVzLnN0YXR1cygyMDApLnNlbmQobWVzc2FnZSk7Cn0pOwoKLyoqCiAqIEB0eXBlIEV4cHJlc3MuUm91dGVyCiAqLwptb2R1bGUuZXhwb3J0cyA9IHJvdXRlcjsK</textarea>
+<textarea class="saurus-file" data-file="manifest.json" data-mode="json">ewogICJtYW5pZmVzdCI6ICIxIiwKICAiY2xpZW50X2lkIjogInt7WU9VUl9DTElFTlRfSUR9fSIsCiAgInZlcnNpb24iOiAiMS4wLjAiLAogICJjYWxsYmFja191cmwiOiAie3tZT1VSX1NFQ1VSRV9BUFBfUk9PVF9VUkx9fS9vYXV0aC9waGFzZS1vbmUiLCAKICAib2F1dGhfZmluYWxfZGVzdGluYXRpb24iOiAiaG9tZSIsCiAgIndlYmhvb2tzIjogewogICAgImNhbGxiYWNrX3VybCI6ICJ7e1lPVVJfU0VDVVJFX0FQUF9ST09UX1VSTH19L3dlYmhvb2tzL2NhbGxiYWNrIiwKICAgICJldmVudHMiOiBbCiAgICAgICJ1c2VyLnVwZGF0ZSIsInNpdGUucHVibGlzaCIsICJzaXRlLmRlbGV0ZSIsICJhcHAudW5pbnN0YWxsIgogICAgXQogIH0sCiAgInNjb3BlcyI6IFsKICAgICJyZWFkOnVzZXIiLAogICAgInJlYWQ6c2l0ZSIKICBdLAogICJsb2NhbGUiOiB7CiAgICAiZGVmYXVsdCI6ICJlbi11cyIsCiAgICAic3VwcG9ydGVkIjogWyJlbi11cyJdCiAgfQp9Cg==</textarea>
 </div>
 </div>
       <div class="saurus-overview">
@@ -82,7 +300,7 @@
       <div class="saurus-editor"></div>
     </div>
     <div class="saurus-explorer">
-      <div class="saurus-file-list"></div><a href="https://github.com/&lt;your GitHub weebly/node-webhook-client" target="_blank" class="explorer-get-code"> <i class="fa fa-lg fa-github-square"> </i>View Code on GitHub</a>
+      <div class="saurus-file-list"></div><a href="https://github.com/weebly/node-webhook-client" target="_blank" class="explorer-get-code"> <i class="fa fa-lg fa-github-square"> </i>View Code on GitHub</a>
     </div>
   </div>
 </div></div>
