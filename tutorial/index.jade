@@ -6,206 +6,251 @@
 
     h3 What You Will Learn
 
-    p How [Weebly Node.js Webhook Client](https://github.com/Weebly/node-webhook-client) works with a light code walk through
+    p How [Weebly Node.js Webhook Client](https://github.com/Weebly/node-webhook-client) works (code review)
     
-    p How to setup and code a basic Webhook Subscription app that consumes the library
+    .chapter(data-title='Live Code Setup')
+      .step(data-title='Prerequisites', data-file='tutorial/prerequisites.txt')
+        :markdown
+          ## What You Need
 
-    p How to run this tutorial app locally and remotely
+          1. [Weebly Retail Account](https://www.weebly.com/)
+          2. [Weebly Developer Account](https://dev.weebly.com/pf_apps_devAccount.html)
+          3. [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
+          4. [Weebly App](https://dev.weebly.com/pf_apps_register.html)
+          5. [Weebly Node.js Webhook Client](https://github.com/Weebly/node-webhook-client) cloned locally
+          6. [Git](https://git-scm.com/downloads) installed on your local workstation
+          7. Your favorite code editor
+          8. Browser (Google Chrome is recommended)
 
-  .step(data-title='Prerequisites', data-file='tutorial/prerequisites.txt')
-    :markdown
-      ## What You Will Need
+      .step(data-title='Register Your App', data-file='tutorial/prerequisites.txt', data-highlight='1-7')
+        :markdown
+          ## Define Your Weebly App to Obtain API Keys
 
-      1. [Weebly Retail Account](https://www.weebly.com/)
-      2. [Weebly Developer Account](https://dev.weebly.com/pf_apps_devAccount.html)
-      3. [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
-      4. [Weebly App](https://dev.weebly.com/pf_apps_register.html)
-      5. [Weebly Node.js Webhook Client](https://github.com/Weebly/node-webhook-client) cloned locally
-      6. [Git](https://git-scm.com/downloads) installed on your local workstation
-      7. [ngrok](https://ngrok.com/) installed on your local workstation
-      8. [Heroku Account](https://www.heroku.com/) and [Heroku Toolbelt](https://devcenter.heroku.com/articles/heroku-cli) installed on your local workstation
-      9. Your favorite code editor
-      10. Browser (Google Chrome is recommended)
+          Login to the [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin) and then [Register a New App](https://dev.weebly.com/pf_apps_register.html) you will use for this tutorial.
 
-  .step(data-title='Register Your App', data-file='tutorial/prerequisites.txt', data-highlight='1-7')
-    :markdown
-      ## Define Your Weebly App to Obtain API Keys
+          App names must be unique across all apps in the Weebly Platform.
 
-      Login to the [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin) and then [Register a New App](https://dev.weebly.com/pf_apps_register.html) you will use for this tutorial.
+          > Replace the template string {{PREFIX}}  below with your personal prefix, I recommend using the first character of your first name and the first three characters of your last name.
+          > Example: If your name is James Gunn, you would name the directory `jgun-event-consumer`.
 
-      App names must be unique across all apps in the Weebly Platform.
+          1. App Name: `{{PREFIX}}-evt-sub` (short for webhook subscriber)
+          2. Category: `Services`
 
-      > Replace the template string {{PREFIX}}  below with your personal prefix, I recommend using the first character of your first name and the first three characters of your last name.
-      > Example: If your name is James Gunn, you would name the directory `jgun-event-consumer`.
+      .step(data-title='App Setup', data-file='README.md')
+        :markdown
+          ## Usages
 
-      1. App Name: `{{PREFIX}}-whsub` (short for webhook subscriber)
-      2. Category: `Services`
+          Please choose from one of the [Usages](https://github.com/weebly/node-webhook-client#usage) in the `README.md` file to setup this app for live operation and to see it in action.
 
-  .step(data-title='Local App Directory', data-file='tutorial/prerequisites.txt', data-highlight='9')
-    :markdown
-      ## Create Source Code Directory 
+          We are going to omit how to setup this app, so we can focus on what the code is actually doing.
 
-      Now that you have your API Keys available, make a new local project directory where you will author the source code for the application:
-      
-      > Replace the template string {{PREFIX}}  below with your personal prefix, I recommend using the first character of your first name and the first three characters of your last name.
-      > Example: If your name is James Gunn, you would name the directory `jgun-event-consumer`.
+    .chapter(data-title='App Server')
+      .step(data-title='Express.js', data-file='server.js', data-highlight='16-20')
+        :markdown
+          ## About the Web Server
 
-      `mkdir {{PREFIX}}-wh-sub`
+          This app uses the [Express.js](https://expressjs.com/) web application framework. Since [Express.js](https://expressjs.com/en/starter/installing.html) is well documented, this tutorial will not go into too many details, but there are some specific pieces of code you should understand.
 
-      You can prevent confusion and mismanaged apps easier by keeping the local app directory and the Weebly app name the same.
+          Express.js allows developers to [write middleware](https://expressjs.com/en/guide/writing-middleware.html) for their applications to customize how their applications handle requests and responses.
 
-  .step(data-title='Initialize Git', data-file='tutorial/prerequisites.txt', data-highlight='11')
-    :markdown
-      ## Establish SCM with Git
+          While it is outside of the scope of this tutorial, it is important to note, there are other types of middlware Express allows you to use:
 
-      How to use Git is outside the scope of this tutorial, there are plenty of learning resources, and if you're brand new to Git I would recommend the [Udemy - Git Started with Github Free Course](https://www.udemy.com/git-started-with-github/).
+          * [Application-Level Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.application)
+          * [Router-level Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.router)
+          * [Error-Handling Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.error-handling)
+          * [Built-In Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.built-in)
+          * [Third-Party Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.third-party)
+          
+      .step(data-title='Application Level Middleware', data-file='server.js', data-highlight='22-36)
+        :markdown
+          ## Application-Level Middleware
 
-      Let's change our present working directory (pwd) into the local app directory we created in the previous step...
+          Express.js allows developers to [write middleware](https://expressjs.com/en/guide/writing-middleware.html) for their applications.
 
-      `cd {{PREFIX}}-wh-sub`
+          Highlighted is the instantiation of custom [Express.js - Application-Level Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.application) written specifically for the Weebly Node Webhook Client,
+          
+      .step(data-title='Weebly Middleware', data-file='middleware/weebly.js')
+        :markdown
+          ## Weebly Middleware
 
-      Now, we can initialize Git...
+          This piece of custom, application-level middleware exposes your Weebly API Keys for this app to the [request](https://expressjs.com/en/4x/api.html#req) and [response](https://expressjs.com/en/4x/api.html#res) objects in Express.
 
-      `git init`
+      .step(data-title='Mounting Middleware', data-file='server.js', data-highlight='38-42)
+        :markdown
+          ## Mounting Middleware
 
+          Here the code defines specifically which middleware, and the order of execution, each piece of middleware is to operate upon for all HTTP requests received by this app to `/oauth` or `/webhooks`.
 
-  .step(data-title='Local App URL Setup', data-file='tutorial/prerequisites.json', data-highlight='17')
-    :markdown
-      ## Create ngrok URL
+          Specifically, you can see that each route has its own middleware chain and they both share the Application-Level, Weebly Middleware, which is executed before the Router-Level Middleware.
 
-      Please visit [ngrok.com](https://ngrok.com/) to either [login](https://dashboard.ngrok.com/user/login) or [sign up](https://dashboard.ngrok.com/user/signup) to receive your ngrok account.
+          * Requests to `/oauth[...]` will be sent to the Weebly Middleware, and then to the OAuth Routing Middleware
+          * Requests to `/webhooks[...]` will be sent to the Weebly Middleware, and then to the Webhook Routing Middleware 
 
-      Then, if you have not already, please [download and setup](https://ngrok.com/download).
+        .chapter(data-title='OAuth - Router Middleware')
+          .step(data-title='OAuth - Router Middleware', data-file='app/oauth-router.js')
+            :markdown
+              ## OAuth Middleware 
 
-      Once you have completed ngrok setup, open a new terminal window or tab, and expose a local web server to the internet:
+              `oauth-router.js` is a piece of custom [Express.js Routing Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.router) that handles all incoming HTTP requests beginning with `/oauth`.
 
-      `ngrok http 80`
+              Please read the [App Authorization and Installation Flow](https://dev.weebly.com/pf_apps_authorize_and_install.html) to understand each phase a Weebly app experiences while being installed...
 
-      This will produce print the following information...
+          .step(data-title='OAuth - Phase One', data-file='app/oauth-router.js', data-highlight='10-15')
+            :markdown
+              ## Oauth - Phase One
 
-      ```
-        ngrok by @inconshreveable
+              First, the code will accept HTTP **GET** requests going to `/oauth/phase-one`, and immediately defines the `clientId` and `secretKey` variables which were made available from the Weebly Middleware.
 
-        Tunnel Status                 online
-        Version                       2.0/2.0
-        Web Interface                 http://127.0.0.1:4040
-        Forwarding                    http://92832de0.ngrok.io -> localhost:80
-        Forwarding                    https://92832de0.ngrok.io -> localhost:80
+          .step(data-title='Request Invalidation', data-file='app/oauth-router.js', data-highlight='17-32')
+            :markdown
+              ## Request Validation
 
-        Connnections                  ttl     opn     rt1     rt5     p50     p90
-                                  0       0       0.00    0.00    0.00    0.00
-      ```
-      
-      The **Forwarding** secure URL (in the above case: `https://92832de0.ngrok.io`) is your **Local App URL**. Please keep this terminal window open, you will need that in a moment.
+              As a developer, you must **KNOW with great confidence** the inbound requests your web applications can trust.
 
+              In this section of code you can see how to invalidate requests to ensure that requests sent to this particular route can be trusted as coming from Weebly. 
+              Here, a comparison object is created and converted into a string (verification HMAC) using identical values to the Weebly generated HMAC.
+              then you use these two pieces of data to invalidate the HMAC query parameter received in requests to this route, are actually requests you can trust were sent from Weebly servers.
 
-  .step(data-title='Remote App URL Setup', data-file='tutorial/prerequisites.txt', data-highlight='19')
-    :markdown
-      ## Create Heroku App and URL
+              You can read the details about this [here](https://dev.weebly.com/pf_apps_authorize_and_install.html#decode-and-verify-the-hash), but to provide you the 'gist' of what happens:
 
-      The next thing you need to do is setup your remote app URL. You will need a valid and current Heroku account to continue.
-      
-      Either [Log In to Heroku](https://id.heroku.com/), or if you do not have a Heroku account [Sign Up for Heroku now](https://signup.heroku.com).
+              1. A Weebly site administrator (user) clicks the "Add App" button for your app in [Weebly App Center](https://www.weebly.com/app-center)
+              2. Weebly presents the 'user' with the list of persmissions (**scopes** defined in your `manifest.json`) that your app is requesting
+              3. The 'user' can either authorize (connect) or decline, but assume the 'user' accepts for sake of example
+              4. Weebly creates an HMAC-SHA256 encoded hash of the request parameters using your Weebly App **SECRET**, which means **ONLY YOU** should be able to recreate that **EXACT** HMAC string using identical values
+              5. If your **generated** HMAC string is IDENTICAL to the HMAC in the request query parameters, you can consider this a "verified request" (trusting that it came from Weebly) and proceed with code execution
 
-      The [Heroku Toolbelt CLI](https://devcenter.heroku.com/articles/heroku-cli) must installed on your local workstation to proceed, please take a moment and do that now if you haven't already.
+          .step(data-title='Request an Authorization Code', data-file='app/oauth-router.js', data-highlight='42-58')
+            :markdown
+              ## Requesting an Authorization Code
 
-      You shold already be in the local app source code directory root we created earlier. If your `pwd` is not in the root of the project directory, please `cd {{PREFIX}}-wh-sub` now..
+              Since the request is trusted, you first generate the second phase URL, callback parameters, and version (if included in the original request).
 
-      Login to the Heroku CLI: `heroku login` (then enter your credentials)
+              Then your app tells the [Express response object](https://expressjs.com/en/4x/api.html#res) to redirect to the appropriate Weebly URL to obtain an `authorization_code`.
 
-      App names on heroku must be unique across all of Heroku, so you will want to use your prefix here as well.
+              If the redirect is successfully formed/accepted, Weebly will respond to your redirect by sending a new HTTP request to containing an `authorization_code` correlating to the Weebly User and Site.
 
-      > Replace the template string {{PREFIX}}  below with your personal prefix, I recommend using the first character of your first name and the first three characters of your last name.
-      > Example: If your name is James Gunn, you would name the directory `jgun-event-consumer`.
+          .step(data-title='OAuth - Phase Two', data-file='app/oauth-router.js', data-highlight='61-66')
+            :markdown
+              ## Oauth - Phase Two
 
-      Create a new Heroku app: `heroku apps:create {{PREFIX}}-whsub` 
+              Here, the code designates it will accept HTTP **GET** requests going to `/oauth/phase-two`, and immediately defines the `clientId` and `secretKey` variables which were made available from the Weebly Middleware.
 
-      This will output something similar to the following example...
+          .step(data-title='Exchange for `access_token`', data-file='app/oauth-router.js', data-highlight='68-90')
+            :markdown
+              ## Exchanging Authorization Code for an `access_token`
 
-      ```
-        Creating ⬢ prefix-wh-sub... done
-        https://prefix-wh-sub.herokuapp.com/ | https://git.heroku.com/prefix-wh-sub.git
-        Git remote heroku added
-      ```
+              > NOTE: It is of **CRITICAL IMPORTANCE** that you take every measure possible to secure and mitigate attacks to obtain your Weebly app API Keys (including your app's `manifest.json` file). If you do not, and attackers gain access, this section of code is at risk, and places at risk your app customer data on Weebly.
 
-      You will want to copy/paste the URL shown here, this is your **Remote App URL** and we will need this in the next step.
+              There are a few things happening here to exchange the `authorization_code` for a valid `access_token`:
+              
+              1. The body is formed for the HTTP POST request which includes: `authorization_code`, `client_id`, `client_secret`
+              2. The `redirect_url` parameter is used as the destination for the subsequent code-token exchange request
+              3. App initiates POST request to **redirect_url** (Weebly API endpoint `/app-center/oauth/access_token`
+              4. An `access_token` will be received upon a successful request, and should be stored securely by your app for future [Weebly API](https://dev.weebly.com/pf_apis_about.html) requests
 
-      Congratulations! You have completed all the prepartions for the app, now let's setup our environment variables for the app...
+          .step(data-title='Service Initialization', data-file='app/oauth-router.js', data-highlight='91')
+            :markdown
+              ## Service Initialization
 
-  .step(data-title='Environment Variables', data-file='tutorial/env.tmpl')
-    :markdown
-      ## Setup Environment Variables
+              Many developers get confused about when their app is actually "installed" and "connected" to a Weebly site.
+              
+              This blank line of the code represents the **point-in-time** during the [App Authorization and Installation Flow](https://dev.weebly.com/pf_apps_authorize_and_install.html#redirect-back-to-weebly-to-trade-auth-code-for-permanent-token) when your app/service has an opportunity to ensure the most optimal User Experience by performing any:
 
-      Rename the environment variable template file:
-      
-      `mv env.tmpl .env`
-      
-      Our code will use [dotenv](https://www.npmjs.com/package/dotenv) to load local development environment variables from the `.env` file.
-      Environment variables define high-level configuration parametersyour app needs to operate.
+              * Account/User setup
+              * New User Verification(s)
+              * Weebly Plan/Feature Checks
+              * Security Checks
 
-      Next, open `.env` file for editing. You are going to update the following values:
+              These types of service initializations should occur prior to [redirecting to the final destination](https://dev.weebly.com/pf_apps_authorize_and_install.html#redirect-to-final-destination) which we describe in the next step of the tutorial.
 
-      * `COMPANY_DISPLAY_NAME`: Set to your company name
-      * `WEEBLY_CLIENT_ID`: Copy/Paste your app **Client ID** from [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
-      * `WEEBLY_CLIENT_SECRET`: Copy/Paste your app **Secret** from [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
-      * `WEEBLY_APP_NAME`: Replace {{PREFIX}} with your first inital and the first three characters of your last name
-      * `WEEBLY_TEST_SITE_URL`: Set to your [Weebly Developer Test Site](https://dev.weebly.com/pf_apps_testsite.html)
-      * `HEROKU_APP_NAME`: Set to your Heroku app name here
-      * `HEROKU_APP_URL`: Paste your **Remote App URL** (heroku) here
-      * `NGROK_APP_URL`: Paste your **Local App URL** (ngrok) here
+          .step(data-title='Connecting Your App', data-file='app/oauth-router.js', data-highlight='92')
+            :markdown
+              ## Final Redirect - Connecting your App
 
-      Save your changes, and close the `.env` file, you're all done with the Environment Variables!
+              To reach this point in the code, your app must have:
 
-  .step(data-title='Create the App Manifest', data-file='tutorial/manifest.json')
-    :markdown
-      ## Weebly Manifest
+              1. Successfully validated an installation request from Weebly to your `manifest.json` *callback_url* property
+              2. Redirected back to Weebly with the expected request/payload
+              3. Successfully received an `authorization_code` from the **phase-two** portion of the OAuth2 Authorization Flow
+              4. Redirected back to Weebly to exchange your `authorization_code` for a valid API `access_token`
+              5. Executed any account/user setup and validations internal to your app or service
 
-      Every app you create for Weebly App Center must have an associated `manifest.json` file (stored at the root of the project ZIP file you upload to Weebly Developer Admin Portal).
-      
-      The `manifest.json` contains metadata about your app and instructs Weebly how to interact with your app as well as what permissions (aka: *scopes*) your app requires customers to authorize for API access.
-      
-      The `manifest.json` schema must adhere to the Weebly Platform API version upon which your app is targeted to operate. For complete information about this schema, read [Configure Manifest Properties](https://dev.weebly.com/pf_apps_manifest.html) in the Weebly Developer Docs.
-      
-      Rename the manifest template file: `mv manifest.tmpl manifest.json`. then  open `manifest.json` for editing. You are going to replace the following template string placeholders with actual values:
+              This final redirect indicates to Weebly that your app has completed all necessary setup and configuration operations, and the app should be considered "installed" and "connected".
 
-      * `WEEBLY_CLIENT_ID`: Copy/Paste/Replace {{YOUR_CLIENT_ID}} with your app's **Client ID** from [Weebly Developer Admin Portal](https://www.weebly.com/developer-admin)
-      * `SERVER_ROOT_URL`: Copy/Paste/Replace {{either your Heroku URL or ngrok URL
-      * `SERVER_ROOT_URL`: Copy/Paste either your Heroku URL or ngrok URL
+              If your app does not perform this final redirect, your app will be in a **disconnected** state.
 
-  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
-    :markdown
-      ## Configuration
+        .chapter(data-title='Webhook - Router Middleware')
+          .step(data-title='Webhook Router Middleware', data-file='app/webhooks-router.js')
+            :markdown
+              ## Webhooks Middleware
 
-  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
-    :markdown
-      ## Configuration
+              `webhooks-router.js` is custom [Express.js Routing Middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.router) handling all incoming HTTP requests beginning with `/webhooks`.
 
-  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
-    :markdown
-      ## Configuration
+              The URL where events will be sent is defined in `webhooks.callback_url` property of your `manifest.json`.
 
-  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
-    :markdown
-      ## Configuration
+              Please read the [Receiving Webhooks](https://dev.weebly.com/pf_wh_webhooks.html#receive-webhooks) to understand the data Weebly will POST to your app when events occur to which your app has subscribed.
 
-  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
-    :markdown
-      ## Configuration
+          .step(data-title='Subscribing to Events', data-file='manifest.json', data-highlight='9-11')
+            :markdown
+              ## Subscribing to Events
 
-  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
-    :markdown
-      ## Configuration
+              Weebly apps can [subscribe to events](https://dev.weebly.com/pf_wh_webhooks.html#subscribe-to-webhooks). There are several different types of events available for your app to be notified about when they occur upon a site where your app is installed:
 
-  .step(data-title='Step Two')
-    h2 Under Construction
+              * [User Events](https://dev.weebly.com/pf_wh_user.html)
+              * [Site Events](https://dev.weebly.com/pf_wh_site.html)
+              * [Store Events](https://dev.weebly.com/pf_wh_store.html)
+              * [Membership Events](https://dev.weebly.com/pf_wh_member.html)
+              * [App Events](https://dev.weebly.com/pf_wh_app.html)
+              * [Form Events](https://dev.weebly.com/pf_wh_form.html)
+              * [Blog Events](https://dev.weebly.com/pf_wh_blog.html)
+              * [Dashboard Card Events](https://dev.weebly.com/pf_wh_card.html)
 
-    p more tutorial to come.
+              You define the types of Weebly Events your app will receive in the **webhooks.events** property in your `manifest.json`.
 
-  //- Example: include markdown file
-    .step(data-title='Step Three', data-file='', data-highlight='')
-      include:markdown three.md
+              The default `events` this app subscribes to are: `app.uninstall`, `user.update`, `site.publish`, `site.delete`. These are all crucial events for any Weebly App and are highly recommended for subscription.
 
-  //- Example: include jade file (don't need file extension)
-    .step(data-title='Step Four', data-file='', data-highlight='')
-      include four
+          .step(data-title='Receiving Events', data-file='app/webhooks-router.js', data-highlight='9-11')
+            :markdown
+              ## Subscribing to Events
+                The code here indicates this app will only HTTP POST requests sent to:
 
+                `{{YOUR_APP_ROOT_URL}}/webhooks/callback` will be accepted, but you still need to peform request invalidation to be certain Weebly sent the request.
+
+          .step(data-title='Invalidating Webhook Event Requests', data-file='app/webhooks-router.js', data-highlight='12-33')
+            :markdown
+              ## Invalidating Webhook Event Requests
+
+              To prevent malicious attackers from spoofing or forging requests to your `webhook.callback_url` you need to invalidate the request.
+
+              All Webhook Event POST Request Body will contain:
+
+              * `client_id`: Your app's Client ID from the Weebly Developer Admin Portal
+              * `client_version`:  The version of your app which generated the event (helpful in cases of managing multiple versions)
+              * `event`: The event name (according to the Weebly Webhook docs)
+              * `timestamp`: Unix epoch timestamp when the event occurred according to Weebly servers
+              * `data`: Event-specific data, see the respective Webhook Event Type docs
+              * `hmac`: `client_id, `client_version`, `event`, `timestamp`, and `data` sent in the request to be used to invalidate incoming event requests
+
+              Similar to verifying the HMAC hash received on app installation, here we prepare a comparison object/string and then re-generate the HMAC to be certain the request was actually created and sent by Weebly.
+
+          .step(data-title='Handling Events', data-file='app/webhooks-router.js', data-highlight='32-42')
+            :markdown
+              ## Handling Events
+
+              Here, the code is merely logging the event headers and requests to console, but this is an opportunity for your app to become event-driven!
+
+              In production apps, this is the point-in-time to handle events allowing your app to behave proactively, addressing concerns such as:
+
+              * Saving events to persistent storage (logging)
+              * Making relevant Weebly API requests based on your app business logic
+              * Performing internal data update(s)for the respective customer/site
+              * Revoking access/permissions (in cases of `app.uninstall` or `site.delete` events)
+              * Alerting/Reporting to customer(s) of related changes within your app/service
+
+          .step(data-title='Webhook Event Responses', data-file='app/webhooks-router.js', data-highlight='44')
+            :markdown
+              ## Webhook Event Responses
+
+              When your app has received a valid and verified Weebly Event Request, it is expected that your server will respond with an HTTP 200 Status Code before the request times out.
+
+              If you respond with anything other than an HTTP 200 to a valid Weebly Webhook Event Request, Weebly will continue to retry sending the Webhook event to your server up to 12 times over a 48 hour period.
